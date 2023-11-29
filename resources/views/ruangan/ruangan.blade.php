@@ -1,10 +1,10 @@
 @extends('template')
 
 @section('style')
-    <link rel="stylesheet" href="{{asset('dist/assets/extensions/simple-datatables/style.css')}}">
+    <link rel="stylesheet" href="{{ asset('dist/assets/extensions/simple-datatables/style.css') }}">
 
 
-    <link rel="stylesheet" href="{{asset('dist/assets/compiled/css/table-datatable.css')}}">
+    <link rel="stylesheet" href="{{ asset('dist/assets/compiled/css/table-datatable.css') }}">
 @endsection
 
 @section('title')
@@ -29,7 +29,7 @@
             <h5 class="card-title">
                 Data Ruangan
             </h5>
-            <a class="btn btn-primary mb-2" href="#" role="button">Tambah Ruangan</a>
+            <a class="btn btn-primary mb-2" href="/ruangan/tambah" role="button">Tambah Ruangan</a>
         </div>
         <div class="card-body">
             <table class="table table-striped" id="table1">
@@ -46,12 +46,25 @@
                 <tBody>
                     @foreach ($datas as $item)
                         <tr>
-                            <td>{{$loop->iteration}}</td>
-                            <td>{{$item->kode_ruangan}}</td>
-                            <td>{{$item->ruangan}}</td>
-                            <td>{{$item->id_pj}}</td>
-                            <td>{{$item->keterangan}}</td>
-                            <td>Edit | Delete</td>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $item->kode_ruangan }}</td>
+                            <td>{{ $item->ruangan }}</td>
+                            <td>{{ $item->id_pj }}</td>
+                            <td>{{ $item->keterangan }}</td>
+                            <td><a href="ruangan/edit/{{ $item->id }}"
+                                    class="btn btn-warning
+                                    btn-sm">
+                                    <i class="bi bi-pencil"></i> Edit</a>
+
+                                <form action="{{ url('ruangan/delete/' . $item->id) }}" method="POST"
+                                    style="display: inline-block">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm"><i
+                                            class="bi bi-trash"></i>Delete</button>
+                                </form>
+
+                            </td>
                         </tr>
                     @endforeach
                 </tBody>

@@ -21,6 +21,12 @@ Route::get('/', function () {
 
 // Ruangan
 Route::get('/ruangan', [RuangController::class, 'index']);
+Route::get('/ruangan/tambah', [RuangController::class, 'tambah']);
+Route::post('/ruangan/tambah', [RuangController::class, 'create']);
+Route::get('/ruangan/edit/{id}', [RuangController::class, 'updatePage']);
+Route::put('/ruangan/update/{id}', [RuangController::class, 'update']);
+Route::delete('/ruangan/delete/{id}', [RuangController::class, 'destroy']);
+// Route::delete('/ruangan/delete/{id}', [RuangController::class, 'destroy'])->name('ruangan.delete');
 
 
 Route::get('/barang', [BarangController::class, 'index']);
