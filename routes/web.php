@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\RuangController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BarangController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,3 +21,11 @@ Route::get('/', function () {
 
 // Ruangan
 Route::get('/ruangan', [RuangController::class, 'index']);
+
+
+Route::get('/barang', [BarangController::class, 'index']);
+Route::get('/barang/tambah', [BarangController::class, 'tambah']);
+Route::post('/barang/tambah', [BarangController::class, 'create']);
+Route::get('/barang/edit/{id}', [BarangController::class, 'edit']);
+Route::put('/barang/update/{id}', [BarangController::class, 'editproses']);
+Route::get('/barang/delete/{id}', [BarangController::class, 'delete']);
