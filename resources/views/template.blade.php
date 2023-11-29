@@ -90,7 +90,7 @@
                                     <a href="/barang" class="submenu-link">Barang</a>
                                 </li>
                                 <li class="submenu-item  ">
-                                    <a href="form-editor-ckeditor.html" class="submenu-link">Ruangan</a>
+                                    <a href="/ruangan" class="submenu-link">Ruangan</a>
                                 </li>
                                 <li class="submenu-item  ">
                                     <a href="form-editor-ckeditor.html" class="submenu-link">Kategori</a>

@@ -29,7 +29,7 @@
             <h5 class="card-title">
                 Data Ruangan
             </h5>
-            <a class="btn btn-primary mb-2" href="/siswa/tambah" role="button">Tambah Siswa</a>
+            <a class="btn btn-primary mb-2" href="#" role="button">Tambah Ruangan</a>
         </div>
         <div class="card-body">
             <table class="table table-striped" id="table1">
