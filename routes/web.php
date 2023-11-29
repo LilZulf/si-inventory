@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BarangController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +17,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('template');
 });
+
+
+
+Route::get('/barang', [BarangController::class, 'index']);
+Route::get('/barang/tambah', [BarangController::class, 'tambah']);
+Route::post('/barang/tambah', [BarangController::class, 'create']);
+Route::get('/barang/edit/{id}', [BarangController::class, 'edit']);
+Route::put('/barang/update/{id}', [BarangController::class, 'editproses']);
+Route::get('/barang/delete/{id}', [BarangController::class, 'delete']);

@@ -87,7 +87,7 @@
                             </a>
                             <ul class="submenu ">
                                 <li class="submenu-item  ">
-                                    <a href="foUsersuill.html" class="submenu-link">Barang</a>
+                                    <a href="/barang" class="submenu-link">Barang</a>
                                 </li>
                                 <li class="submenu-item  ">
                                     <a href="form-editor-ckeditor.html" class="submenu-link">Ruangan</a>
