@@ -3,75 +3,93 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Kategori;
+use App\Models\Ruang;
+use App\Models\Barang;
+use Illuminate\Support\Facades\Validator;
 
 class BarangController extends Controller
 {
     public function index()
     {
-        // $kelas = Kelas::join('gurus', 'kelas.id_guru', '=', 'gurus.id')
-        //     ->get(['kelas.*', 'gurus.nama_guru']);
-        // //$kelas = Kelas::with('gurus')->paginate(10);
-        return view ('barang.barang');
+        $barangs = Barang::join('ruangs', 'barangs.id_ruangan', '=', 'ruangs.id')
+        ->join('kategoris', 'barangs.id_kategori', '=', 'kategoris.id_kategori')
+        ->select('barangs.*', 'ruangs.ruangan', 'kategoris.nama_kategori')
+        ->get();
+        return view ('barang.barang',['barangs'=>$barangs]);
     }
 
     public function tambah()  {
-        // $guru = Guru::all();
-        return view('barang/barangTambah');
+        $kategoris = Kategori::all();
+        $ruangs = Ruang::all();
+        return view('barang/barangTambah',['kategoris' => $kategoris,'ruangs'=>$ruangs]);
     }
 
     public function create(Request $request)  {
         // Validasi input menggunakan Validator
         $validator = Validator::make($request->all(), [
-            'nama_kelas' => 'required|unique:kelas',
-            'id_guru' => 'required',
+            'kode' => 'required|unique:barangs,kode_barang',
+            'kategori' => 'required',
+            'lokasi' => 'required',
+            'nama' => 'required',
+            'tahun' => 'required',
         ]);
 
         if ($validator->fails()) {
-            return redirect('/kelas/tambah')->withErrors($validator)->withInput();
+            return redirect('/barang/tambah')->withErrors($validator)->withInput();
         }
 
-        Kelas::create([
-            'nama_kelas' => $request->nama_kelas,
-            'id_guru' => $request->id_guru
+        Barang::create([
+            'nama_barang'=>$request->nama,
+            'kode_barang' =>$request->kode,
+            'tahun_pengadaan' => $request->tahun,
+            'id_ruangan' => $request->lokasi,
+            'id_kategori' => $request->kategori
         ]);
-        return redirect('/kelas')->with('success', "Berhasil menambahkan Data Kelas");
+        return redirect('/barang')->with('success', "Berhasil menambahkan Barang");
     }
 
     public function edit($id)  {
-        $guru = Guru::all();
-        $kelas = Kelas::where('id_kelas','=', $id)->get()->first();
-
-        return view('kelas/kelasEdit',['kelas'=> $kelas,'guru'=>$guru]);
+        $barangs = Barang::where('id_barang','=', $id)->get()->first();
+        $kategoris = Kategori::all();
+        $ruangs = Ruang::all();
+        return view('barang.barangEdit',['barangs'=> $barangs,'kategoris'=>$kategoris,'ruangs'=>$ruangs]);
     }
 
-    public function editproses($id,Request $request){
+    public function editproses($id, Request $request)
+    {
         $validator = Validator::make($request->all(), [
-            'nama_kelas' => 'required|unique:kelas',
-            'id_guru' => 'required',
+            // 'kode' => 'required|unique:barangs,kode_barang,' . $id,
+            'kategori' => 'required',
+            'lokasi' => 'required',
+            'nama' => 'required',
+            'tahun' => 'required',
         ]);
-
+    
         if ($validator->fails()) {
-            return redirect('/kelas/edit/' .$id)->withErrors($validator)->withInput();
+            return redirect('/barang/edit/' . $id)->withErrors($validator)->withInput();
         }
-
-        $kelas = Kelas::find($id);
-        
-        // $this->validate($request,[
-        //     'nama_kelas' => 'required',
-        //     'id_guru' => 'required']);
-
-        $kelas->update([
-            'nama_kelas' => $request->nama_kelas,
-            'id_guru' => $request->id_guru
+    
+        $barang = Barang::find($id);
+    
+        $barang->update([
+            'nama_barang' => $request->nama,
+            'kode_barang' => $request->kode,
+            'tahun_pengadaan' => $request->tahun,
+            'id_ruangan' => $request->lokasi,
+            'id_kategori' => $request->kategori
         ]);
-        return redirect('/kelas')->with('success', "Berhasil Mengupdate Data Kelas");
+    
+        return redirect('/barang')->with('success', "Berhasil Mengupdate Barang");
     }
+    
+
 
     public function delete($id)  {
-        $kelas =  Kelas::find($id);
+        $barang =  Barang::find($id);
 
-        $kelas->delete();
+        $barang->delete();
 
-        return redirect('/kelas')->with('success', "Berhasil Menghapus Data Kelas");
+        return redirect('/barang')->with('success', "Berhasil Menghapus Barang");
     }
 }
