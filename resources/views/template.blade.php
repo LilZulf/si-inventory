@@ -93,7 +93,7 @@
                                     <a href="/ruangan" class="submenu-link">Ruangan</a>
                                 </li>
                                 <li class="submenu-item  ">
-                                    <a href="form-editor-ckeditor.html" class="submenu-link">Kategori</a>
+                                    <a href="/kategori" class="submenu-link">Kategori</a>
                                 </li>
                             </ul>
                         </li>

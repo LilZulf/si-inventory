@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\RuangController;
+use App\Http\Controllers\KategoriController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BarangController;
 
@@ -35,3 +36,9 @@ Route::post('/barang/tambah', [BarangController::class, 'create']);
 Route::get('/barang/edit/{id}', [BarangController::class, 'edit']);
 Route::put('/barang/update/{id}', [BarangController::class, 'editproses']);
 Route::get('/barang/delete/{id}', [BarangController::class, 'delete']);
+Route::get('/kategori',[KategoriController::class, 'index']);
+Route::get('/kategori/tambah',[KategoriController::class,'Tambah']);
+Route::post('/kategori/tambah',[KategoriController::class,'Create']);
+Route::get('/kategori/edit/{id}',[KategoriController::class,'Rubah']);
+Route::put('/kategori/edit/{id}',[KategoriController::class, 'Edit']);
+Route::get('/kategori/delete/{id}',[KategoriController::class, 'Delete']);
