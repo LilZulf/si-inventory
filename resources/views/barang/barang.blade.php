@@ -23,20 +23,23 @@
                 </tr>
             </thead>
             <tbody>
-                {{-- @if (!$siswa->isEmpty())
-                    @foreach ($siswa as $item)
+                @if (!$barangs->isEmpty())
+                    @foreach ($barangs as $item)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $item->nama }}</td>
-                            <td>{{ $item->nisn }}</td>
-                            <td>{{ $item->kelas->nama_kelas }}</td>
-                            <td>{{ $item->jenis_kelamin }}</td>
-                            <td><a class="btn btn-warning" href="/siswa/edit/{{ $item->id }}" role="button">Ubah</a> <a
-                                    class="btn btn-danger" href="/siswa/delete/{{ $item->id }}" role="button">Hapus</a>
+                            <td>{{ $item->kode_barang }}</td>
+                            <td>{{ $item->nama_barang }}</td>
+                            <td>{{ $item->nama_kategori }}</td>
+                            <td>{{ $item->tahun_pengadaan }}</td>
+                            <td>{{ $item->ruangan }}</td>
+                            <td><a class="btn btn-warning" href="/barang/edit/{{ $item->id_barang }}"
+                                    role="button">Ubah</a>
+                                <a class="btn btn-danger" href="/barang/delete/{{ $item->id_barang }}"
+                                    role="button">Hapus</a>
                             </td>
                         </tr>
                     @endforeach
-                @endif --}}
+                @endif
 
             </tbody>
             <tfoot>
@@ -57,7 +60,18 @@
     <script src="https://code.jquery.com/jquery-3.7.0.js" type="text/javascript"></script>
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js" type="text/javascript"></script>
     <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         new DataTable('#example');
+    </script>
+    <script>
+        @if (session('success'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil',
+                text: '{{ session('success') }}',
+            });
+        @endif
     </script>
 @endsection
