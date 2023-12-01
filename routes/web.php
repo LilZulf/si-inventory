@@ -37,6 +37,8 @@ Route::get('/barang/edit/{id}', [BarangController::class, 'edit']);
 Route::put('/barang/update/{id}', [BarangController::class, 'editproses']);
 Route::get('/barang/delete/{id}', [BarangController::class, 'delete']);
 
+Route::get('/barang/ruang', [BarangController::class, 'indexBarang']);
+Route::get('/barang/ruang/info/{id}', [BarangController::class, 'infoBarang']);
 
 Route::get('/kategori',[KategoriController::class, 'index']);
 Route::get('/kategori/tambah',[KategoriController::class,'Tambah']);

@@ -7,6 +7,7 @@ use App\Models\Kategori;
 use App\Models\Ruang;
 use App\Models\Barang;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class BarangController extends Controller
 {
@@ -92,4 +93,49 @@ class BarangController extends Controller
 
         return redirect('/barang')->with('success', "Berhasil Menghapus Barang");
     }
+
+
+    public function indexBarang()
+    {
+        $ruangs = Ruang::orderBy("kode_ruangan", "asc")->get();
+        $barangData = [];
+    
+        foreach ($ruangs as $ruang) {
+            $barangs = Barang::join('kategoris', 'barangs.id_kategori', '=', 'kategoris.id_kategori')
+                ->where('barangs.id_ruangan', $ruang->id)
+                ->select(
+                    'barangs.id_barang',
+                    'barangs.nama_barang',
+                    'barangs.kode_barang',
+                    'barangs.tahun_pengadaan',
+                    'kategoris.nama_kategori'
+                )
+                ->get();
+    
+            $jumlahBarang = count($barangs);
+    
+            $barangData[] = [
+                'ruang' => $ruang,
+                'jumlahBarang' => $jumlahBarang,
+                'barang' => $barangs
+            ];
+        }
+        // dd($barangData);
+    
+        return view('barang_ruang.barangRuang', ['barangData' => $barangData]);
+    }
+    
+
+        public function infoBarang($id)
+    {
+        $barangs = Barang::join('ruangs', 'barangs.id_ruangan', '=', 'ruangs.id')
+            ->join('kategoris', 'barangs.id_kategori', '=', 'kategoris.id_kategori')
+            ->select('barangs.id_barang', 'barangs.nama_barang', 'barangs.kode_barang', 'barangs.tahun_pengadaan', 'ruangs.ruangan', 'kategoris.nama_kategori')
+            ->where('ruangs.id',$id)
+            ->get();
+        return view('barang_ruang.barangInfo', ['barangs' => $barangs]);
+    }
+
+
+
 }
