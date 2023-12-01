@@ -20,14 +20,12 @@ class KategoriController extends Controller
 
     public function Create(Request $request) {
         $validator = Validator::make($request->all(),[
-            'id_kategori' => 'required|unique:kategoris',
             'nama' => 'required'
         ]);
         if ($validator->fails()) {
             return redirect('/kategori/tambah')->withErrors($validator)->withInput();
         }
         Kategori::create([
-            'id_kategori' => $request->id_kategori,
             'nama_kategori' => $request->nama,
         ]);
         return redirect('/kategori');

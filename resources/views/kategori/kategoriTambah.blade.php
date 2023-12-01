@@ -10,18 +10,9 @@
             <form action="{{url('/kategori/tambah')}}" method="POST">
                 @csrf
                 <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="basicInput">ID Kategori</label>
-                            <input type="text" class="form-control" id="basicInput" name="id_kategori">
-                        </div>
-    
-                    </div>
-                    <div class="col-md-6">
                         <div class="form-group">
                             <label for="basicInput">Nama Kategori</label>
                             <input type="text" class="form-control" id="basicInput" name="nama">
-                        </div>
                     </div>
                 </div>
             </div>
