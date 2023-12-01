@@ -11,18 +11,9 @@
                 @csrf
                 @method('PUT')
                 <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="basicInput">ID Kategori</label>
-                            <input type="text" class="form-control" id="basicInput" name="id_kategori" value="{{$kategori->id_kategori}}" readonly>
-                        </div>
-    
-                    </div>
-                    <div class="col-md-6">
                         <div class="form-group">
                             <label for="basicInput">Nama Kategori</label>
                             <input type="text" class="form-control" id="basicInput" name="nama" value="{{$kategori->nama_kategori}}">
-                        </div>
                     </div>
                 </div>
             </div>
