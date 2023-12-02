@@ -13,17 +13,15 @@ class BarangController extends Controller
 {
     public function index()
     {
-        $barangs = Barang::join('ruangs', 'barangs.id_ruangan', '=', 'ruangs.id')
-        ->join('kategoris', 'barangs.id_kategori', '=', 'kategoris.id_kategori')
-        ->select('barangs.*', 'ruangs.ruangan', 'kategoris.nama_kategori')
+        $barangs = Barang::join('kategoris', 'barangs.id_kategori', '=', 'kategoris.id_kategori')
+        ->select('barangs.*', 'kategoris.nama_kategori')
         ->get();
         return view ('barang.barang',['barangs'=>$barangs]);
     }
 
     public function tambah()  {
         $kategoris = Kategori::all();
-        $ruangs = Ruang::all();
-        return view('barang/barangTambah',['kategoris' => $kategoris,'ruangs'=>$ruangs]);
+        return view('barang/barangTambah',['kategoris' => $kategoris]);
     }
 
     public function create(Request $request)  {
@@ -31,9 +29,9 @@ class BarangController extends Controller
         $validator = Validator::make($request->all(), [
             'kode' => 'required|unique:barangs,kode_barang',
             'kategori' => 'required',
-            'lokasi' => 'required',
+            'satuan' => 'required',
             'nama' => 'required',
-            'tahun' => 'required',
+            'jumlah' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -41,11 +39,11 @@ class BarangController extends Controller
         }
 
         Barang::create([
-            'nama_barang'=>$request->nama,
             'kode_barang' =>$request->kode,
-            'tahun_pengadaan' => $request->tahun,
-            'id_ruangan' => $request->lokasi,
-            'id_kategori' => $request->kategori
+            'nama_barang'=>$request->nama,
+            'id_kategori' => $request->kategori,
+            'satuan' => $request->satuan,
+            'jumlah' => $request->jumlah
         ]);
         return redirect('/barang')->with('success', "Berhasil menambahkan Barang");
     }
@@ -53,18 +51,17 @@ class BarangController extends Controller
     public function edit($id)  {
         $barangs = Barang::where('id_barang','=', $id)->get()->first();
         $kategoris = Kategori::all();
-        $ruangs = Ruang::all();
-        return view('barang.barangEdit',['barangs'=> $barangs,'kategoris'=>$kategoris,'ruangs'=>$ruangs]);
+        return view('barang.barangEdit',['barangs'=> $barangs,'kategoris'=>$kategoris]);
     }
 
     public function editproses($id, Request $request)
     {
         $validator = Validator::make($request->all(), [
-            // 'kode' => 'required|unique:barangs,kode_barang,' . $id,
+            // 'kode' => 'required|unique:barangs,kode_barang',
             'kategori' => 'required',
-            'lokasi' => 'required',
+            'satuan' => 'required',
             'nama' => 'required',
-            'tahun' => 'required',
+            'jumlah' => 'required',
         ]);
     
         if ($validator->fails()) {
@@ -74,11 +71,11 @@ class BarangController extends Controller
         $barang = Barang::find($id);
     
         $barang->update([
-            'nama_barang' => $request->nama,
-            'kode_barang' => $request->kode,
-            'tahun_pengadaan' => $request->tahun,
-            'id_ruangan' => $request->lokasi,
-            'id_kategori' => $request->kategori
+            'kode_barang' =>$request->kode,
+            'nama_barang'=>$request->nama,
+            'id_kategori' => $request->kategori,
+            'satuan' => $request->satuan,
+            'jumlah' => $request->jumlah
         ]);
     
         return redirect('/barang')->with('success', "Berhasil Mengupdate Barang");

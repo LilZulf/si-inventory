@@ -29,16 +29,8 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="helperText">Lokasi</label>
-                                <div>
-                                    <select class="choices form-select" name="lokasi">
-                                        @foreach ($ruangs as $item)
-                                            <option value="{{ $item->id }}">{{ $item->ruangan }}</option>
-                                        @endforeach
-                                        {{-- <option value="1">square</option>
-                                        <option value="2">circle</option> --}}
-                                    </select>
-                                </div>
+                                <label for="helpInputTop">Jumlah</label>
+                                <input type="text" class="form-control" name="jumlah" id="helpInputTop">
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -47,8 +39,8 @@
                                 <input type="text" class="form-control" id="basicInput" name="nama">
                             </div>
                             <div class="form-group">
-                                <label for="helpInputTop">Tahun Pengadaan</label>
-                                <input type="text" class="form-control" name="tahun" id="helpInputTop">
+                                <label for="helpInputTop">Satuan</label>
+                                <input type="text" class="form-control" name="satuan" id="helpInputTop">
                             </div>
 
                         </div>

@@ -32,17 +32,9 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="helperText">Lokasi</label>
-                                <div>
-                                    <select class="choices form-select" name="lokasi">
-                                        @foreach ($ruangs as $item)
-                                            <option value="{{ $item->id }}"
-                                                {{ $barangs->id_ruangan == $item->id ? 'selected' : '' }}>
-                                                {{ $item->ruangan }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
+                                <label for="helpInputTop">Jumlah</label>
+                                <input type="text" class="form-control" name="jumlah" id="helpInputTop"
+                                    value="{{ $barangs->jumlah }}">
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -52,15 +44,15 @@
                                     value="{{ $barangs->nama_barang }}">
                             </div>
                             <div class="form-group">
-                                <label for="helpInputTop">Tahun Pengadaan</label>
-                                <input type="text" class="form-control" name="tahun" id="helpInputTop"
-                                    value="{{ $barangs->tahun_pengadaan }}">
+                                <label for="helpInputTop">Satuan</label>
+                                <input type="text" class="form-control" name="satuan" id="helpInputTop"
+                                    value="{{ $barangs->satuan }}">
                             </div>
 
                         </div>
                     </div>
             </div>
-            <button class="btn btn-success" type="submit">Tambah</button>
+            <button class="btn btn-success" type="submit">Edit</button>
             </form>
         </div>
     </section>
