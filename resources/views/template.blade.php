@@ -25,8 +25,8 @@
                         <div class="row d-flex justify-content-center align-items-center">
                             <div class="logo">
                                 <a href="/">
-                                    <img src="{{ asset('dist/assets/compiled/png/logo.png') }}" class="img-fluid" alt="Logo"
-                                        style="width: 250px; height: auto;" srcset="">
+                                    <img src="{{ asset('dist/assets/compiled/png/logo.png') }}" class="img-fluid"
+                                        alt="Logo" style="width: 250px; height: auto;" srcset="">
                                 </a>
                             </div>
 
@@ -121,7 +121,7 @@
                         </li>
 
                         <li class="sidebar-item  ">
-                            <a href="index.html" class='sidebar-link'>
+                            <a href="/barang/ruang" class='sidebar-link'>
                                 <i class="bi bi-building-fill"></i>
                                 <span>Barang Ruangan</span>
                             </a>

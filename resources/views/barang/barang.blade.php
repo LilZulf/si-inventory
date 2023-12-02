@@ -17,12 +17,13 @@
                     <th>Kode Barang</th>
                     <th>Nama Barang</th>
                     <th>Kategori</th>
-                    <th>Tahun Pengadaan</th>
-                    <th>Lokasi</th>
+                    <th>Satuan</th>
+                    <th>Quantity</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>
+
                 @if (!$barangs->isEmpty())
                     @foreach ($barangs as $item)
                         <tr>
@@ -30,8 +31,8 @@
                             <td>{{ $item->kode_barang }}</td>
                             <td>{{ $item->nama_barang }}</td>
                             <td>{{ $item->nama_kategori }}</td>
-                            <td>{{ $item->tahun_pengadaan }}</td>
-                            <td>{{ $item->ruangan }}</td>
+                            <td>{{ $item->satuan }}</td>
+                            <td>{{ $item->jumlah }}</td>
                             <td><a class="btn btn-warning" href="/barang/edit/{{ $item->id_barang }}"
                                     role="button">Ubah</a>
                                 <a class="btn btn-danger" href="/barang/delete/{{ $item->id_barang }}"
@@ -40,7 +41,6 @@
                         </tr>
                     @endforeach
                 @endif
-
             </tbody>
             <tfoot>
                 <tr>
@@ -48,8 +48,8 @@
                     <th>Kode Barang</th>
                     <th>Nama Barang</th>
                     <th>Kategori</th>
-                    <th>Tahun Pengadaan</th>
-                    <th>Lokasi</th>
+                    <th>Satuan</th>
+                    <th>Quantity</th>
                     <th>Aksi</th>
                 </tr>
             </tfoot>
@@ -66,6 +66,24 @@
         new DataTable('#example');
     </script>
     <script>
+        $('.btn-danger').on('click', function(e) {
+            e.preventDefault();
+            var href = $(this).attr('href');
+
+            Swal.fire({
+                title: "Are you sure?",
+                text: "Yakin Hapus Data?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = href;
+                }
+            });
+        });
         @if (session('success'))
             Swal.fire({
                 icon: 'success',
