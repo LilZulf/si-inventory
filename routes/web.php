@@ -4,6 +4,7 @@ use App\Http\Controllers\RuangController;
 use App\Http\Controllers\KategoriController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BarangController;
+use App\Http\Controllers\BarangMasukController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +40,15 @@ Route::get('/barang/delete/{id}', [BarangController::class, 'delete']);
 
 Route::get('/barang/ruang', [BarangController::class, 'indexBarang']);
 Route::get('/barang/ruang/info/{id}', [BarangController::class, 'infoBarang']);
+
+Route::get('/barang/masuk', [BarangMasukController::class, 'index']);
+Route::get('/barang/masuk/tambah', [BarangMasukController::class, 'tambah']);
+Route::post('/barang/masuk/tambah', [BarangMasukController::class, 'create']);
+Route::get('/barang/masuk/edit/{id}', [BarangMasukController::class, 'edit']);
+Route::put('/barang/masuk/update/{id}', [BarangMasukController::class, 'editproses']);
+Route::get('/barang/masuk/delete/{id}', [BarangMasukController::class, 'delete']);
+Route::get('/barang/masuk/validasi/{id}', [BarangMasukController::class, 'validasi']);
+
 
 Route::get('/kategori',[KategoriController::class, 'index']);
 Route::get('/kategori/tambah',[KategoriController::class,'Tambah']);

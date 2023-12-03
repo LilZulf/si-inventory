@@ -135,7 +135,7 @@
                         </li>
 
                         <li class="sidebar-item  ">
-                            <a href="index.html" class='sidebar-link'>
+                            <a href="/barang/masuk" class='sidebar-link'>
                                 <i class="bi bi-file-arrow-down-fill"></i>
                                 <span>Barang Masuk</span>
                             </a>
