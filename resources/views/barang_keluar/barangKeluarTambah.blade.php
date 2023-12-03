@@ -23,6 +23,16 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label for="helperText">Tujuan</label>
+                                <div>
+                                    <select class="choices form-select" name="ruang">
+                                        @foreach ($ruangs as $item)
+                                            <option value="{{ $item->id }}">{{ $item->ruangan }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
 
                         </div>
                         <div class="col-md-6">

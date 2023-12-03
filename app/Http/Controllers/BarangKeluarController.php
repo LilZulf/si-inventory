@@ -16,15 +16,16 @@ class BarangKeluarController extends Controller
     {
         $barangs = BarangKeluar::join('barangs','barang_keluars.id_barang','=','barangs.id_barang')
         ->join('kategoris', 'barangs.id_kategori', '=', 'kategoris.id_kategori')
-        ->select('barang_keluars.*','barangs.nama_barang','barangs.satuan','barangs.kode_barang','kategoris.nama_kategori')
+        ->join('ruangs', 'barang_keluars.id_ruang', '=', 'ruangs.id')
+        ->select('barang_keluars.*','barangs.nama_barang','barangs.satuan','barangs.kode_barang','kategoris.nama_kategori','ruangs.ruangan')
         ->get();
         return view ('barang_keluar.barangKeluar',['barangs'=>$barangs]);
     }
 
     public function tambah()  {
         $barangs = Barang::all();
-        // dd($barangs);
-        return view('barang_keluar.barangKeluarTambah',['barangs' => $barangs]);
+        $ruangs = Ruang::all();
+        return view('barang_keluar.barangKeluarTambah',['barangs' => $barangs,'ruangs' =>$ruangs]);
     }
 
     public function create(Request $request)  {
@@ -32,6 +33,7 @@ class BarangKeluarController extends Controller
         $validator = Validator::make($request->all(), [
             'barang' => 'required',
             'jumlah' => 'required',
+            'ruang' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -41,6 +43,7 @@ class BarangKeluarController extends Controller
         BarangKeluar::create([
           'id_barang' => $request->barang,
           'jumlah_keluar' => $request->jumlah,
+          'id_ruang' => $request->ruang,
           'status' => 'waiting',
         ]);
         return redirect('/barang/keluar')->with('success', "Berhasil menambahkan Barang");
@@ -49,8 +52,9 @@ class BarangKeluarController extends Controller
     public function edit($id)  {
         $barangs = BarangKeluar::where('id_barang_keluar','=', $id)->get()->first();
         $listbarang = Barang::all();
-        // dd($barangs);
-        return view('barang_keluar.barangKeluarEdit',['barangs'=> $barangs,'listbarang'=>$listbarang]);
+        $listRuang = Ruang::all();
+        // dd($listRuang[0]->id);
+        return view('barang_keluar.barangKeluarEdit',['barangs'=> $barangs,'listbarang'=>$listbarang,'listRuang' => $listRuang]);
     }
 
     public function editproses($id, Request $request)
@@ -59,6 +63,7 @@ class BarangKeluarController extends Controller
         $validator = Validator::make($request->all(), [
             'barang' => 'required',
             'jumlah' => 'required',
+            'ruang' => 'required'
         ]);
     
         if ($validator->fails()) {
@@ -70,6 +75,7 @@ class BarangKeluarController extends Controller
         $barang->update([
             'id_barang' => $request->barang,
             'jumlah_keluar' => $request->jumlah,
+            'id_barang' =>$request->ruang,
             'status' => 'waiting',
         ]);
     
@@ -95,12 +101,17 @@ class BarangKeluarController extends Controller
         $newJumlah = $barangKeluar->jumlah_keluar;
         $newJumlah = floatval($newJumlah);
         $sum = $jumlah - $newJumlah;
-        $barang->update([
-            'jumlah' => $sum,
-        ]);
-        $barangKeluar->update([
-            'status' => 'validate',
-        ]);
-        return redirect('/barang/keluar')->with('success', "Berhasil Validasi Barang");
+        if($sum < 0){
+            return redirect('/barang/keluar')->with('Gagal', "Gagal Validasi Barang Silahkan Update Barang");
+        } else{
+            $barang->update([
+                'jumlah' => $sum,
+            ]);
+            $barangKeluar->update([
+                'status' => 'validate',
+            ]);
+            return redirect('/barang/keluar')->with('success', "Berhasil Validasi Barang");
+        }
+        
     }
 }

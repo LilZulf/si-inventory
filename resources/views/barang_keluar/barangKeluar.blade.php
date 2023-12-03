@@ -19,6 +19,7 @@
                     <th>Kategori</th>
                     <th>Satuan</th>
                     <th>Quantity</th>
+                    <th>Tujuan</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -33,6 +34,7 @@
                             <td>{{ $item->nama_kategori }}</td>
                             <td>{{ $item->satuan }}</td>
                             <td>{{ $item->jumlah_keluar }}</td>
+                            <td>{{ $item->ruangan }}</td>
                             @if ($item->status == 'validate')
                                 <td>
                                     <a class="btn btn-success disabled" href="" role="button">Validated</a>
@@ -61,6 +63,7 @@
                     <th>Kategori</th>
                     <th>Satuan</th>
                     <th>Quantity</th>
+                    <th>Tujuan</th>
                     <th>Aksi</th>
                 </tr>
             </tfoot>
@@ -127,6 +130,13 @@
                 icon: 'success',
                 title: 'Berhasil',
                 text: '{{ session('success') }}',
+            });
+        @endif
+        @if (session('Gagal'))
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal',
+                text: '{{ session('Gagal') }}',
             });
         @endif
     </script>

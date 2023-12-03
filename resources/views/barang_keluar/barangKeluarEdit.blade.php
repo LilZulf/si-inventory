@@ -25,6 +25,19 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label for="helperText">Tujuan</label>
+                                <div>
+                                    <select class="form-select" name="ruang">
+                                        @foreach ($listRuang as $item)
+                                            <option value="{{ $item->id }}"
+                                                {{ $barangs->id_ruang == $item->id ? 'selected' : '' }}>
+                                                {{ $item->ruangan }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
 
                         </div>
                         <div class="col-md-6">
