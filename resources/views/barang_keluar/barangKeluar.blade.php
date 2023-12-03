@@ -4,11 +4,11 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
 @endsection
 @section('title')
-    <h3>Daftar Barang Masuk</h3>
+    <h3>Daftar Barang Keluar</h3>
 @endsection
 @section('content')
     <div class="table-responsive">
-        <a class="btn btn-primary mb-4 mt-2" href="/barang/masuk/tambah" role="button">Tambah Barang</a>
+        <a class="btn btn-primary mb-4 mt-2" href="/barang/keluar/tambah" role="button">Tambah Barang</a>
         {{-- <a class="btn btn-success mb-2" href="/barang/import" role="button">Import Excel</a> --}}
         <table id="example" class="table table-striped table-bordered datatables" style="width:100%">
             <thead>
@@ -32,18 +32,18 @@
                             <td>{{ $item->nama_barang }}</td>
                             <td>{{ $item->nama_kategori }}</td>
                             <td>{{ $item->satuan }}</td>
-                            <td>{{ $item->jumlah_masuk }}</td>
+                            <td>{{ $item->jumlah_keluar }}</td>
                             @if ($item->status == 'validate')
                                 <td>
                                     <a class="btn btn-success disabled" href="" role="button">Validated</a>
                                 </td>
                             @else
-                                <td><a class="btn btn-warning" href="/barang/masuk/edit/{{ $item->id_barang_masuk }}"
+                                <td><a class="btn btn-warning" href="/barang/keluar/edit/{{ $item->id_barang_keluar }}"
                                         role="button">Ubah</a>
-                                    <a class="btn btn-danger" href="/barang/masuk/delete/{{ $item->id_barang_masuk }}"
+                                    <a class="btn btn-danger" href="/barang/keluar/delete/{{ $item->id_barang_keluar }}"
                                         role="button">Hapus</a>
                                     <a id="confirm" class="btn btn-primary validasi"
-                                        href="/barang/masuk/validasi/{{ $item->id_barang_masuk }}"
+                                        href="/barang/keluar/validasi/{{ $item->id_barang_keluar }}"
                                         role="button">Validate</a>
 
                                 </td>
