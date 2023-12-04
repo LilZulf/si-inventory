@@ -7,7 +7,7 @@
             </div>
 
             <div class="card-body">
-                <form action="{{ url('/barang/masuk/update/' . $barangs->id_barang_masuk) }}" method="POST">
+                <form action="{{ url('/barang/keluar/update/' . $barangs->id_barang_keluar) }}" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="row">
@@ -25,13 +25,26 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label for="helperText">Tujuan</label>
+                                <div>
+                                    <select class="form-select" name="ruang">
+                                        @foreach ($listRuang as $item)
+                                            <option value="{{ $item->id }}"
+                                                {{ $barangs->id_ruang == $item->id ? 'selected' : '' }}>
+                                                {{ $item->ruangan }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
 
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="helpInputTop">Jumlah</label>
                                 <input type="text" class="form-control" name="jumlah" id="helpInputTop"
-                                    value="{{ $barangs->jumlah_masuk }}">
+                                    value="{{ $barangs->jumlah_keluar }}">
                             </div>
                         </div>
                     </div>
@@ -51,11 +64,7 @@
                 var errors = @json(session('errors')->all());
                 var errorMessage = errors;
                 var indonesianMessages = {
-                    'The nisn has already been taken.': 'Email sudah terdaftar.',
-                    'The nama field is required.': 'Nama Harus Di Isi',
-                    'The nisn field is required.': 'NIP Harus Di Isi',
-                    'The kelas field is required.': 'Alamat Harus Di Isi',
-                    'The jenis_kelamin field is required.': 'Jenis Kelamin Harus Di Isi',
+                    'The jumlah field is required.': 'Jumlah Harus Di Isi',
 
                 };
                 for (var key in indonesianMessages) {

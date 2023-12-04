@@ -5,6 +5,7 @@ use App\Http\Controllers\KategoriController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\BarangMasukController;
+use App\Http\Controllers\BarangKeluarController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +49,15 @@ Route::get('/barang/masuk/edit/{id}', [BarangMasukController::class, 'edit']);
 Route::put('/barang/masuk/update/{id}', [BarangMasukController::class, 'editproses']);
 Route::get('/barang/masuk/delete/{id}', [BarangMasukController::class, 'delete']);
 Route::get('/barang/masuk/validasi/{id}', [BarangMasukController::class, 'validasi']);
+
+
+Route::get('/barang/keluar', [barangKeluarController::class, 'index']);
+Route::get('/barang/keluar/tambah', [barangKeluarController::class, 'tambah']);
+Route::post('/barang/keluar/tambah', [barangKeluarController::class, 'create']);
+Route::get('/barang/keluar/edit/{id}', [barangKeluarController::class, 'edit']);
+Route::put('/barang/keluar/update/{id}', [barangKeluarController::class, 'editproses']);
+Route::get('/barang/keluar/delete/{id}', [barangKeluarController::class, 'delete']);
+Route::get('/barang/keluar/validasi/{id}', [barangKeluarController::class, 'validasi']);
 
 
 Route::get('/kategori',[KategoriController::class, 'index']);

@@ -40,14 +40,14 @@ class BarangMasukController extends Controller
 
         BarangMasuk::create([
           'id_barang' => $request->barang,
-          'jumlah' => $request->jumlah,
+          'jumlah_masuk' => $request->jumlah,
           'status' => 'waiting',
         ]);
         return redirect('/barang/masuk')->with('success', "Berhasil menambahkan Barang");
     }
 
     public function edit($id)  {
-        $barangs = BarangMasuk::where('id_barang','=', $id)->get()->first();
+        $barangs = BarangMasuk::where('id_barang_masuk','=', $id)->get()->first();
         $listbarang = Barang::all();
         // dd($barangs);
         return view('barang_masuk.barangMasukEdit',['barangs'=> $barangs,'listbarang'=>$listbarang]);
@@ -69,7 +69,7 @@ class BarangMasukController extends Controller
     
         $barang->update([
             'id_barang' => $request->barang,
-            'jumlah' => $request->jumlah,
+            'jumlah_masuk' => $request->jumlah,
             'status' => 'waiting',
         ]);
     
@@ -92,11 +92,11 @@ class BarangMasukController extends Controller
         $barang = Barang::find($barangMasuk->id_barang);
         $jumlah = $barang->jumlah;
         $jumlah = floatval($jumlah);
-        $newJumlah = $barangMasuk->jumlah;
+        $newJumlah = $barangMasuk->jumlah_masuk;
         $newJumlah = floatval($newJumlah);
         $sum = $jumlah + $newJumlah;
         $barang->update([
-            'jumlah' => $sum,
+            'jumlah_masuk' => $sum,
         ]);
         $barangMasuk->update([
             'status' => 'validate',

@@ -128,7 +128,7 @@
                         </li>
 
                         <li class="sidebar-item  ">
-                            <a href="index.html" class='sidebar-link'>
+                            <a href="/barang/keluar" class='sidebar-link'>
                                 <i class="bi bi-file-arrow-up-fill"></i>
                                 <span>Barang keluar</span>
                             </a>
