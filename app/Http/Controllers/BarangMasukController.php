@@ -98,6 +98,11 @@ class BarangMasukController extends Controller
         $barang->update([
             'jumlah_masuk' => $sum,
         ]);
+        /**
+         * $barang->jumlah = $sum;
+         * $barang->save();
+         */
+
         $barangMasuk->update([
             'status' => 'validate',
         ]);
