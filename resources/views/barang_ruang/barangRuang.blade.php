@@ -21,9 +21,9 @@
                 @foreach ($barangData as $data)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $data['ruang']->ruangan }}</td>
-                        <td>{{ $data['jumlahBarang'] }}</td>
-                        <td><a class="btn btn-primary" href="/barang/ruang/info/{{ $data['ruang']->id }}"
+                        <td>{{ $data->ruangan }}</td>
+                        <td>{{ $data->jumlah_keluar }}</td>
+                        <td><a class="btn btn-primary" href="/barang/ruang/info/{{ $data->id_barang_keluar }}"
                                 role="button">Info</a>
                         </td>
                     </tr>
