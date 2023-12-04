@@ -15,6 +15,8 @@
                     <th>Kode Barang</th>
                     <th>Nama Barang</th>
                     <th>Kategori</th>
+                    <th>Satuan</th>
+                    <th>Quantity</th>
                 </tr>
             </thead>
             <tbody>
@@ -24,6 +26,8 @@
                         <td>{{ $data->kode_barang }}</td>
                         <td>{{ $data->nama_barang }}</td>
                         <td>{{ $data->nama_kategori }}</td>
+                        <td>{{ $data->satuan }}</td>
+                        <td>{{ $data->jumlah_keluar }}</td>
                     </tr>
                 @endforeach
             </tbody>
@@ -33,6 +37,8 @@
                     <th>Kode Barang</th>
                     <th>Nama Barang</th>
                     <th>Kategori</th>
+                    <th>Satuan</th>
+                    <th>Quantity</th>
                 </tr>
             </tfoot>
         </table>

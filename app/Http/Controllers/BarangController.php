@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Kategori;
 use App\Models\Ruang;
 use App\Models\Barang;
+use App\Models\BarangKeluar;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
@@ -96,40 +97,41 @@ class BarangController extends Controller
     {
         $ruangs = Ruang::orderBy("kode_ruangan", "asc")->get();
         $barangData = [];
-    
-        foreach ($ruangs as $ruang) {
-            $barangs = Barang::join('kategoris', 'barangs.id_kategori', '=', 'kategoris.id_kategori')
-                ->where('barangs.id_ruangan', $ruang->id)
+            $barangs = BarangKeluar::join('barangs','barang_keluars.id_barang', '=','barangs.id_barang')
+                ->join('kategoris', 'barangs.id_kategori', '=', 'kategoris.id_kategori')
+                ->join('ruangs','barang_keluars.id_ruang','=','ruangs.id')
                 ->select(
                     'barangs.id_barang',
                     'barangs.nama_barang',
                     'barangs.kode_barang',
-                    'barangs.tahun_pengadaan',
-                    'kategoris.nama_kategori'
+                    'kategoris.nama_kategori',
+                    'ruangs.ruangan',
+                    'barang_keluars.*'
                 )
                 ->get();
+            
+        
+        // dd($barangs);
     
-            $jumlahBarang = count($barangs);
-    
-            $barangData[] = [
-                'ruang' => $ruang,
-                'jumlahBarang' => $jumlahBarang,
-                'barang' => $barangs
-            ];
-        }
-        // dd($barangData);
-    
-        return view('barang_ruang.barangRuang', ['barangData' => $barangData]);
+        return view('barang_ruang.barangRuang', ['barangData' => $barangs]);
     }
     
 
         public function infoBarang($id)
     {
-        $barangs = Barang::join('ruangs', 'barangs.id_ruangan', '=', 'ruangs.id')
-            ->join('kategoris', 'barangs.id_kategori', '=', 'kategoris.id_kategori')
-            ->select('barangs.id_barang', 'barangs.nama_barang', 'barangs.kode_barang', 'barangs.tahun_pengadaan', 'ruangs.ruangan', 'kategoris.nama_kategori')
-            ->where('ruangs.id',$id)
-            ->get();
+        $barangs = BarangKeluar::join('barangs','barang_keluars.id_barang', '=','barangs.id_barang')
+                ->join('kategoris', 'barangs.id_kategori', '=', 'kategoris.id_kategori')
+                ->where('barang_keluars.id_ruang','=',$id)
+                ->select(
+                    'barangs.id_barang',
+                    'barangs.nama_barang',
+                    'barangs.kode_barang',
+                    'barangs.satuan',
+                    'kategoris.nama_kategori',
+                    'barang_keluars.*'
+                )
+                ->get();
+                // dd($barangs);
         return view('barang_ruang.barangInfo', ['barangs' => $barangs]);
     }
 
