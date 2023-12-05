@@ -9,6 +9,7 @@ use App\Models\Barang;
 use App\Models\BarangKeluar;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class BarangController extends Controller
 {
@@ -93,47 +94,48 @@ class BarangController extends Controller
     }
 
 
-    public function indexBarang()
-    {
-        $ruangs = Ruang::orderBy("kode_ruangan", "asc")->get();
-        $barangData = [];
-            $barangs = BarangKeluar::join('barangs','barang_keluars.id_barang', '=','barangs.id_barang')
-                ->join('kategoris', 'barangs.id_kategori', '=', 'kategoris.id_kategori')
-                ->join('ruangs','barang_keluars.id_ruang','=','ruangs.id')
-                ->select(
-                    'barangs.id_barang',
-                    'barangs.nama_barang',
-                    'barangs.kode_barang',
-                    'kategoris.nama_kategori',
-                    'ruangs.ruangan',
-                    'barang_keluars.*'
-                )
-                ->get();
-            
-        
-        // dd($barangs);
-    
-        return view('barang_ruang.barangRuang', ['barangData' => $barangs]);
+    public function indexBarang(){
+    $ruangs = Ruang::orderBy("kode_ruangan", "asc")->get();
+    $barangData = [];
+
+    foreach ($ruangs as $ruang) {
+        $totalJumlahKeluar = BarangKeluar::where('id_ruang', $ruang->id)->sum('jumlah_keluar');
+
+        $barangData[] = [
+            'ruangan' => $ruang->ruangan,
+            'jumlah_keluar' => $totalJumlahKeluar,
+        ];
     }
+
+    return view('barang_ruang.barangRuang', ['barangData' => $barangData]);
+}
+
     
 
-        public function infoBarang($id)
-    {
-        $barangs = BarangKeluar::join('barangs','barang_keluars.id_barang', '=','barangs.id_barang')
-                ->join('kategoris', 'barangs.id_kategori', '=', 'kategoris.id_kategori')
-                ->where('barang_keluars.id_ruang','=',$id)
-                ->select(
-                    'barangs.id_barang',
-                    'barangs.nama_barang',
-                    'barangs.kode_barang',
-                    'barangs.satuan',
-                    'kategoris.nama_kategori',
-                    'barang_keluars.*'
-                )
-                ->get();
-                // dd($barangs);
-        return view('barang_ruang.barangInfo', ['barangs' => $barangs]);
-    }
+public function infoBarang($id)
+{
+    $barangs = BarangKeluar::join('barangs', 'barang_keluars.id_barang', '=', 'barangs.id_barang')
+        ->join('kategoris', 'barangs.id_kategori', '=', 'kategoris.id_kategori')
+        ->where('barang_keluars.id_ruang', '=', $id)
+        ->select(
+            'barangs.id_barang',
+            'barangs.nama_barang',
+            'barangs.kode_barang',
+            'barangs.satuan',
+            'kategoris.nama_kategori',
+            'barang_keluars.*'
+        )
+        ->get();
+
+    // Mengubah format created_at untuk setiap objek Carbon pada collection
+    $barangs->transform(function ($item, $key) {
+        $item->created_at_formatted = Carbon::parse($item->created_at)->format('d-m-Y');
+        return $item;
+    });
+
+    return view('barang_ruang.barangInfo', ['barangs' => $barangs]);
+}
+    
 
 
 
