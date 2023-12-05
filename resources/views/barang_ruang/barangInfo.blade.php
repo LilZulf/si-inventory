@@ -17,6 +17,7 @@
                     <th>Kategori</th>
                     <th>Satuan</th>
                     <th>Quantity</th>
+                    <th>Tanggal</th>
                 </tr>
             </thead>
             <tbody>
@@ -28,6 +29,7 @@
                         <td>{{ $data->nama_kategori }}</td>
                         <td>{{ $data->satuan }}</td>
                         <td>{{ $data->jumlah_keluar }}</td>
+                        <td>{{ $data->created_at_formatted }}</td>
                     </tr>
                 @endforeach
             </tbody>
@@ -39,6 +41,7 @@
                     <th>Kategori</th>
                     <th>Satuan</th>
                     <th>Quantity</th>
+                    <th>Tanggal</th>
                 </tr>
             </tfoot>
         </table>
