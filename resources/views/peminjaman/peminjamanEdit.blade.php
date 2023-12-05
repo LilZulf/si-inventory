@@ -3,11 +3,11 @@
     <section class="section">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Edit Data Barang Keluar</h4>
+                <h4 class="card-title">Edit Data Peminjaman Barang</h4>
             </div>
 
             <div class="card-body">
-                <form action="{{ url('/barang/keluar/update/' . $barangs->id_barang_keluar) }}" method="POST">
+                <form action="{{ url('/peminjaman/update/' . $barangs->id_peminjaman) }}" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="row">
@@ -44,7 +44,12 @@
                             <div class="form-group">
                                 <label for="helpInputTop">Jumlah</label>
                                 <input type="text" class="form-control" name="jumlah" id="helpInputTop"
-                                    value="{{ $barangs->jumlah_keluar }}">
+                                    value="{{ $barangs->jumlah_pinjam }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="helpInputTop">Nama Peminjam</label>
+                                <input type="text" class="form-control" name="peminjam" id="helpInputTop"
+                                    value="{{ $barangs->peminjam }}">
                             </div>
                         </div>
                     </div>

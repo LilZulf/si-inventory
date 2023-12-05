@@ -3,37 +3,32 @@
     <section class="section">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Edit Data Barang Keluar</h4>
+                <h4 class="card-title">Tambah Data Peminjaman Barang</h4>
             </div>
 
             <div class="card-body">
-                <form action="{{ url('/barang/keluar/update/' . $barangs->id_barang_keluar) }}" method="POST">
+                <form action="{{ url('/peminjaman/tambah') }}" method="POST">
                     @csrf
-                    @method('PUT')
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="helperText">Nama Barang</label>
                                 <div>
                                     <select class="choices form-select" name="barang">
-                                        @foreach ($listbarang as $item)
-                                            <option value="{{ $item->id_barang }}"
-                                                {{ $barangs->id_barang == $item->id_barang ? 'selected' : '' }}>
-                                                {{ $item->nama_barang }}
-                                            </option>
+                                        @foreach ($barangs as $item)
+                                            <option value="{{ $item->id_barang }}">{{ $item->nama_barang }}</option>
                                         @endforeach
+                                        {{-- <option value="1">Square</option>
+                                        <option value="2">Rectangle</option> --}}
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="helperText">Tujuan</label>
                                 <div>
-                                    <select class="form-select" name="ruang">
-                                        @foreach ($listRuang as $item)
-                                            <option value="{{ $item->id }}"
-                                                {{ $barangs->id_ruang == $item->id ? 'selected' : '' }}>
-                                                {{ $item->ruangan }}
-                                            </option>
+                                    <select class="choices form-select" name="ruang">
+                                        @foreach ($ruangs as $item)
+                                            <option value="{{ $item->id }}">{{ $item->ruangan }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -43,13 +38,16 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="helpInputTop">Jumlah</label>
-                                <input type="text" class="form-control" name="jumlah" id="helpInputTop"
-                                    value="{{ $barangs->jumlah_keluar }}">
+                                <input type="text" class="form-control" name="jumlah" id="helpInputTop">
+                            </div>
+                            <div class="form-group">
+                                <label for="helpInputTop">Nama Peminjam</label>
+                                <input type="text" class="form-control" name="peminjam" id="helpInputTop">
                             </div>
                         </div>
                     </div>
             </div>
-            <button class="btn btn-success" type="submit">Edit</button>
+            <button class="btn btn-success" type="submit">Tambah</button>
             </form>
         </div>
     </section>
