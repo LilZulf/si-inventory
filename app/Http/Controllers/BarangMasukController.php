@@ -95,8 +95,9 @@ class BarangMasukController extends Controller
         $newJumlah = $barangMasuk->jumlah_masuk;
         $newJumlah = floatval($newJumlah);
         $sum = $jumlah + $newJumlah;
+        // dd($sum);
         $barang->update([
-            'jumlah_masuk' => $sum,
+            'jumlah' => $sum,
         ]);
         $barangMasuk->update([
             'status' => 'validate',
