@@ -25,8 +25,8 @@
                         <div class="row d-flex justify-content-center align-items-center">
                             <div class="logo">
                                 <a href="/">
-                                    <img src="{{ asset('dist/assets/compiled/png/logo.png') }}" class="img-fluid" alt="Logo"
-                                        style="width: 250px; height: auto;" srcset="">
+                                    <img src="{{ asset('dist/assets/compiled/png/logo.png') }}" class="img-fluid"
+                                        alt="Logo" style="width: 250px; height: auto;" srcset="">
                                 </a>
                             </div>
 
@@ -108,7 +108,7 @@
                                     <a href="foUsersuill.html" class="submenu-link">Admin</a>
                                 </li>
                                 <li class="submenu-item  ">
-                                    <a href="form-editor-ckeditor.html" class="submenu-link">PJ Ruangan</a>
+                                    <a href="/pj" class="submenu-link">PJ Ruangan</a>
                                 </li>
                             </ul>
                         </li>
