@@ -54,14 +54,13 @@
                             <td>{{ $item->alamat }}</td>
                             <td>{{ $item->jenis_kelamin }}</td>
                             <td>{{ $item->email }}</td>
-                            {{-- <td>{{ $item->password }}</td> --}}
-                            {{-- ruangan/edit/{{ $item->id }} --}}
-                            <td><a href="" class="btn btn-warning
-                                    btn-sm">
+                            <td><a href="pj/edit/{{ $item->id }}"
+                                    class="btn btn-warning
+                                btn-sm">
                                     <i class="bi bi-pencil"></i> Edit</a>
 
-                                {{-- {{ url('ruangan/delete/' . $item->id) }} --}}
-                                <form action="" method="POST" style="display: inline-block">
+                                <form action="{{ url('pj/delete/' . $item->id) }}" method="POST"
+                                    style="display: inline-block">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger btn-sm"><i

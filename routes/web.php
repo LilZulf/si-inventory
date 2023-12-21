@@ -33,6 +33,9 @@ Route::delete('/ruangan/delete/{id}', [RuangController::class, 'destroy']);
 Route::get('/pj', [PjController::class, 'index']);
 Route::get('/pj/tambah', [PjController::class, 'tambah']);
 Route::post('/pj/tambah', [PjController::class, 'create']);
+Route::get('/pj/edit/{id}', [PjController::class, 'updatePage']);
+Route::put('/pj/update/{id}', [PjController::class, 'update']);
+Route::delete('/pj/delete/{id}', [PjController::class, 'destroy']);
 
 //Barang
 Route::get('/barang', [BarangController::class, 'index']);

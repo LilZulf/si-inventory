@@ -49,7 +49,7 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $item->kode_ruangan }}</td>
                             <td>{{ $item->ruangan }}</td>
-                            <td>{{ $item->id_pj }}</td>
+                            <td>{{ $item->nama_pj }}</td>
                             <td>{{ $item->keterangan }}</td>
                             <td><a href="ruangan/edit/{{ $item->id }}"
                                     class="btn btn-warning
