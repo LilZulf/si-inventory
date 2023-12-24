@@ -23,8 +23,9 @@
                                 <label for="helperText">PJ</label>
                                 <div>
                                     <select class="choices form-select" name="id_pj">
-                                        <option value="1">Alex</option>
-                                        <option value="2">Yono</option>
+                                        @foreach ($pjs as $pj)
+                                            <option value="{{ $pj->id }}">{{ $pj->nama_pj }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -37,8 +38,9 @@
                         </div>
                     </div>
             </div>
-            <button class="btn btn-success" type="submit">Tambah</button>
-            </form>
+        </div>
+        <button class="btn btn-success" type="submit">Tambah</button>
+        </form>
         </div>
     </section>
 @endsection

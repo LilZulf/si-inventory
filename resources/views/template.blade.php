@@ -108,7 +108,7 @@
                                     <a href="foUsersuill.html" class="submenu-link">Admin</a>
                                 </li>
                                 <li class="submenu-item  ">
-                                    <a href="form-editor-ckeditor.html" class="submenu-link">PJ Ruangan</a>
+                                    <a href="/pj" class="submenu-link">PJ Ruangan</a>
                                 </li>
                             </ul>
                         </li>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ruang;
+use App\Models\Pj;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -14,19 +15,26 @@ class RuangController extends Controller
 
     public function index()
     {
-        $data = Ruang::all();
+        // $data = Ruang::all();
+        $data = Ruang::select('ruangs.*', 'pj.nama_pj')
+            ->leftJoin('pj', 'ruangs.id_pj', '=', 'pj.id')
+            ->get();
         return view('ruangan.ruangan', ['datas' => $data]);
     }
 
     public function tambah()
     {
         // $guru = Guru::all();
-        return view('ruangan/ruanganTambah');
+        $pjs = Pj::all();
+
+        return view('ruangan/ruanganTambah', compact('pjs'));
+        // return view('ruangan/ruanganTambah');
     }
 
     public function create(Request $request)
     {
-        // Validasi input menggunakan Validator
+
+        $pjs = Pj::all();
         $validator = Validator::make($request->all(), [
             'kode_ruangan' => 'required|unique:ruangs',
             'ruangan' => 'required|string|max:255',
@@ -44,16 +52,19 @@ class RuangController extends Controller
             'id_pj' => $request->id_pj,
             'keterangan' => $request->keterangan,
         ]);
-        return redirect('/ruangan')->with('success', "Berhasil menambahkan Data Ruangan");
+        return redirect('/ruangan')->with('success', "Berhasil menambahkan Data Ruangan")->with('pjs', $pjs);
     }
+
+
 
     public function updatePage($id)
     {
+        $pjs = Pj::all();
         $data = Ruang::find($id);
         if (!$data) {
             return redirect()->route('/ruangan')->with('error', 'Data Tidak Ditemukan');
         }
-        return view('ruangan/editRuangan', ["data" => $data, "id" => $id]);
+        return view('ruangan.editRuangan', compact('data', 'pjs'));
     }
 
     public function update(Request $request, $id)

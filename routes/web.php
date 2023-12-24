@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PjController;
 use App\Http\Controllers\RuangController;
 use App\Http\Controllers\KategoriController;
 use Illuminate\Support\Facades\Route;
@@ -32,7 +33,15 @@ Route::put('/ruangan/update/{id}', [RuangController::class, 'update']);
 Route::delete('/ruangan/delete/{id}', [RuangController::class, 'destroy']);
 // Route::delete('/ruangan/delete/{id}', [RuangController::class, 'destroy'])->name('ruangan.delete');
 
+//PJ
+Route::get('/pj', [PjController::class, 'index']);
+Route::get('/pj/tambah', [PjController::class, 'tambah']);
+Route::post('/pj/tambah', [PjController::class, 'create']);
+Route::get('/pj/edit/{id}', [PjController::class, 'updatePage']);
+Route::put('/pj/update/{id}', [PjController::class, 'update']);
+Route::delete('/pj/delete/{id}', [PjController::class, 'destroy']);
 
+//Barang
 Route::get('/barang', [BarangController::class, 'index']);
 Route::get('/barang/tambah', [BarangController::class, 'tambah']);
 Route::post('/barang/tambah', [BarangController::class, 'create']);

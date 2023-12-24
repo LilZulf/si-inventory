@@ -28,8 +28,10 @@
                             <label for="helperText">PJ</label>
                             <div>
                                 <select class="choices form-select" name="id_pj">
-                                    <option value="1" {{ $data->id_pj == 1 ? 'selected' : '' }}>Alex</option>
-                                    <option value="2" {{ $data->id_pj == 2 ? 'selected' : '' }}>Yono</option>
+                                    @foreach ($pjs as $pj)
+                                        <option value="{{ $pj->id }}" {{ $data->id_pj == $pj->id ? 'selected' : '' }}>
+                                            {{ $pj->nama_pj }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
