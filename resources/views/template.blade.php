@@ -114,7 +114,7 @@
                         </li>
 
                         <li class="sidebar-item  ">
-                            <a href="/siswa" class='sidebar-link'>
+                            <a href="/peminjaman" class='sidebar-link'>
                                 <i class="bi bi-list-task"></i>
                                 <span>Peminjaman</span>
                             </a>

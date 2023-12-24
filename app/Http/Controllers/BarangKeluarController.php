@@ -102,7 +102,7 @@ class BarangKeluarController extends Controller
         $newJumlah = floatval($newJumlah);
         $sum = $jumlah - $newJumlah;
         if($sum < 0){
-            return redirect('/barang/keluar')->with('Gagal', "Gagal Validasi Barang Silahkan Update Barang");
+            return redirect('/barang/keluar')->with('Gagal', "Gagal Validasi Barang, Jumlah Barang Keluar Melebihi Stock Barang, Silahkan Update Barang");
         } else{
             $barang->update([
                 'jumlah' => $sum,

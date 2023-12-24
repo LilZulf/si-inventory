@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\BarangMasukController;
 use App\Http\Controllers\BarangKeluarController;
+use App\Http\Controllers\PeminjamanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -66,3 +67,12 @@ Route::post('/kategori/tambah',[KategoriController::class,'Create']);
 Route::get('/kategori/edit/{id}',[KategoriController::class,'Rubah']);
 Route::put('/kategori/edit/{id}',[KategoriController::class, 'Edit']);
 Route::get('/kategori/delete/{id}',[KategoriController::class, 'Delete']);
+
+Route::get('/peminjaman', [PeminjamanController::class, 'index']);
+Route::get('/peminjaman/tambah', [PeminjamanController::class, 'tambah']);
+Route::post('/peminjaman/tambah', [PeminjamanController::class, 'create']);
+Route::get('/peminjaman/edit/{id}', [PeminjamanController::class, 'edit']);
+Route::put('/peminjaman/update/{id}', [PeminjamanController::class, 'editproses']);
+Route::get('/peminjaman/delete/{id}', [PeminjamanController::class, 'delete']);
+Route::get('/peminjaman/pinjamkan/{id}', [PeminjamanController::class, 'pinjamkan']);
+Route::get('/peminjaman/kembalikan/{id}', [PeminjamanController::class, 'kembalikan']);
