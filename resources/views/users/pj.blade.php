@@ -10,13 +10,13 @@
 @section('title')
     <div class="row">
         <div class="col-12 col-md-6 order-md-1 order-last">
-            <h3>Ruangan</h3>
+            <h3>PJ Ruangan</h3>
         </div>
         <div class="col-12 col-md-6 order-md-2 order-first">
             <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/">Master</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Ruangan</li>
+                    <li class="breadcrumb-item"><a href="/">Users</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">PJ Ruangan</li>
                 </ol>
             </nav>
         </div>
@@ -27,19 +27,21 @@
     <div class="card">
         <div class="card-header">
             <h5 class="card-title">
-                Data Ruangan
+                Data PJ Ruangan
             </h5>
-            <a class="btn btn-primary mb-2" href="/ruangan/tambah" role="button">Tambah Ruangan</a>
+            <a class="btn btn-primary mb-2" href="/pj/tambah" role="button">Tambah PJ Ruangan</a>
         </div>
         <div class="card-body">
             <table class="table table-striped" id="table1">
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Kode Ruangan</th>
-                        <th>Ruangan</th>
-                        <th>PJ</th>
-                        <th>Keterangan</th>
+                        <th>Nama PJ</th>
+                        <th>NIP</th>
+                        <th>Alamat</th>
+                        <th>Jenis Kelamin</th>
+                        <th>Email</th>
+                        {{-- <th>Password</th> --}}
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -47,16 +49,17 @@
                     @foreach ($datas as $item)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $item->kode_ruangan }}</td>
-                            <td>{{ $item->ruangan }}</td>
                             <td>{{ $item->nama_pj }}</td>
-                            <td>{{ $item->keterangan }}</td>
-                            <td><a href="ruangan/edit/{{ $item->id }}"
+                            <td>{{ $item->nip }}</td>
+                            <td>{{ $item->alamat }}</td>
+                            <td>{{ $item->jenis_kelamin }}</td>
+                            <td>{{ $item->email }}</td>
+                            <td><a href="pj/edit/{{ $item->id }}"
                                     class="btn btn-warning
-                                    btn-sm">
+                                btn-sm">
                                     <i class="bi bi-pencil"></i> Edit</a>
 
-                                <form action="{{ url('ruangan/delete/' . $item->id) }}" method="POST"
+                                <form action="{{ url('pj/delete/' . $item->id) }}" method="POST"
                                     style="display: inline-block">
                                     @csrf
                                     @method('DELETE')

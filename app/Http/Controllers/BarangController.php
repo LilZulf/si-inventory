@@ -9,6 +9,7 @@ use App\Models\Barang;
 use App\Models\BarangKeluar;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class BarangController extends Controller
 {
@@ -94,46 +95,91 @@ class BarangController extends Controller
 
 
     public function indexBarang()
-    {
-        $ruangs = Ruang::orderBy("kode_ruangan", "asc")->get();
-        $barangData = [];
-            $barangs = BarangKeluar::join('barangs','barang_keluars.id_barang', '=','barangs.id_barang')
-                ->join('kategoris', 'barangs.id_kategori', '=', 'kategoris.id_kategori')
-                ->join('ruangs','barang_keluars.id_ruang','=','ruangs.id')
-                ->select(
-                    'barangs.id_barang',
-                    'barangs.nama_barang',
-                    'barangs.kode_barang',
-                    'kategoris.nama_kategori',
-                    'ruangs.ruangan',
-                    'barang_keluars.*'
-                )
-                ->get();
-            
-        
-        // dd($barangs);
+{
+    $ruangs = Ruang::orderBy("kode_ruangan", "asc")->get();
+    $barangData = [];
     
-        return view('barang_ruang.barangRuang', ['barangData' => $barangs]);
+    foreach ($ruangs as $ruang) {
+        // Menggunakan leftJoin untuk mendapatkan data ruang yang memiliki barang keluar
+        $ruangWithKeluar = Ruang::leftJoin('barang_keluars', function ($join) use ($ruang) {
+                $join->on('ruangs.id', '=', 'barang_keluars.id_ruang')
+                    ->where('barang_keluars.status', '=', 'validate');
+            })
+            ->select('ruangs.id', 'ruangs.ruangan', DB::raw('SUM(barang_keluars.jumlah_keluar) as total_jumlah_keluar'))
+            ->where('ruangs.id', $ruang->id)
+            ->groupBy('ruangs.id', 'ruangs.ruangan')
+            ->first();
+    
+        $barangData[] = [
+            'ruangan' => $ruangWithKeluar->ruangan,
+            'jumlah_keluar' => $ruangWithKeluar->total_jumlah_keluar ?? 0,
+        ];
     }
+    
+    return view('barang_ruang.barangRuang', ['barangData' => $barangData]);
+}
+
     
 
-        public function infoBarang($id)
-    {
-        $barangs = BarangKeluar::join('barangs','barang_keluars.id_barang', '=','barangs.id_barang')
-                ->join('kategoris', 'barangs.id_kategori', '=', 'kategoris.id_kategori')
-                ->where('barang_keluars.id_ruang','=',$id)
-                ->select(
-                    'barangs.id_barang',
-                    'barangs.nama_barang',
-                    'barangs.kode_barang',
-                    'barangs.satuan',
-                    'kategoris.nama_kategori',
-                    'barang_keluars.*'
-                )
-                ->get();
-                // dd($barangs);
-        return view('barang_ruang.barangInfo', ['barangs' => $barangs]);
+    
+
+public function infoBarang($id)
+{
+    $barangs = BarangKeluar::join('barangs', 'barang_keluars.id_barang', '=', 'barangs.id_barang')
+        ->join('kategoris', 'barangs.id_kategori', '=', 'kategoris.id_kategori')
+        ->where('barang_keluars.id_ruang', '=', $id)
+        ->where('barang_keluars.status','=','validate')
+        ->select(
+            'barangs.id_barang',
+            'barangs.nama_barang',
+            'barangs.kode_barang',
+            'barangs.satuan',
+            'kategoris.nama_kategori',
+            'barang_keluars.*'
+        )
+        ->get();
+
+    $barangs->transform(function ($item, $key) {
+        $item->created_at_formatted = Carbon::parse($item->created_at)->format('d-m-Y');
+        return $item;
+    });
+
+    return view('barang_ruang.barangInfo', ['barangs' => $barangs]);
+}
+    
+public function kembalikan($id)
+{
+    $barangKeluar = BarangKeluar::find($id);
+
+    if (!$barangKeluar) {
+        return redirect('/barang/ruang/info/' . $barangKeluar->id_ruang)->with('Gagal', "Barang Keluar tidak ditemukan.");
     }
+
+    $barang = Barang::find($barangKeluar->id_barang);
+
+    if (!$barang) {
+        return redirect('/barang/ruang/info/' . $barangKeluar->id_ruang)->with('Gagal', "Barang tidak ditemukan.");
+    }
+
+    $jumlahKeluar = $barangKeluar->jumlah_keluar;
+    $jumlahSaatIni = $barang->jumlah;
+
+
+    // Kurangkan jumlah yang keluar dari jumlah saat ini
+    $jumlahBaru = $jumlahSaatIni + $jumlahKeluar;
+
+    // Update jumlah barang
+    $barang->update([
+        'jumlah' => $jumlahBaru,
+    ]);
+
+    // Update status barang keluar menjadi 'returned'
+    $barangKeluar->update([
+        'status' => 'returned',
+    ]);
+
+    return redirect('/barang/ruang/info/' . $barangKeluar->id_ruang)->with('success', "Berhasil mengembalikan Barang");
+}
 
 
 

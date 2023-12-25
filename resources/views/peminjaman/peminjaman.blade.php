@@ -4,49 +4,52 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
 @endsection
 @section('title')
-    <h3>Daftar Barang Keluar</h3>
+    <h3>Daftar Peminjaman Barang</h3>
 @endsection
 @section('content')
     <div class="table-responsive">
-        <a class="btn btn-primary mb-4 mt-2" href="/barang/keluar/tambah" role="button">Tambah Barang</a>
+        <a class="btn btn-primary mb-4 mt-2" href="/peminjaman/tambah" role="button">Tambah Barang</a>
         {{-- <a class="btn btn-success mb-2" href="/barang/import" role="button">Import Excel</a> --}}
         <table id="example" class="table table-striped table-bordered datatables" style="width:100%">
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>Kode Barang</th>
                     <th>Nama Barang</th>
-                    <th>Kategori</th>
-                    <th>Satuan</th>
                     <th>Quantity</th>
-                    <th>Tujuan</th>
+                    <th>Peminjam</th>
+                    <th>Tanggal Kembali</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>
-
                 @if (!$barangs->isEmpty())
                     @foreach ($barangs as $item)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $item->kode_barang }}</td>
                             <td>{{ $item->nama_barang }}</td>
-                            <td>{{ $item->nama_kategori }}</td>
-                            <td>{{ $item->satuan }}</td>
-                            <td>{{ $item->jumlah_keluar }}</td>
-                            <td>{{ $item->ruangan }}</td>
-                            @if ($item->status == 'validate' || $item->status == 'returned')
+                            <td>{{ $item->jumlah_pinjam }}</td>
+                            <td>{{ $item->peminjam }}</td>
+                            @if ($item->status == 'returned')
+                                <td>{{ $item->created_at_formatted }}</td>
+                            @else
+                                <td> - </td>
+                            @endif
+                            @if ($item->status == 'borrowed')
                                 <td>
-                                    <a class="btn btn-success disabled" href="" role="button">Validated</a>
+                                    <a class="btn btn-warning" href="/peminjaman/kembalikan/{{ $item->id_peminjaman }}"
+                                        role="button">Kembalikan</a>
+                                </td>
+                            @elseif ($item->status == 'returned')
+                                <td>
+                                    <a class="btn btn-success disabled" href="" role="button">Dikembalikan</a>
                                 </td>
                             @else
-                                <td><a class="btn btn-warning" href="/barang/keluar/edit/{{ $item->id_barang_keluar }}"
+                                <td><a class="btn btn-warning" href="/peminjaman/edit/{{ $item->id_peminjaman }}"
                                         role="button">Ubah</a>
-                                    <a class="btn btn-danger" href="/barang/keluar/delete/{{ $item->id_barang_keluar }}"
+                                    <a class="btn btn-danger" href="/peminjaman/delete/{{ $item->id_peminjaman }}"
                                         role="button">Hapus</a>
                                     <a id="confirm" class="btn btn-primary validasi"
-                                        href="/barang/keluar/validasi/{{ $item->id_barang_keluar }}"
-                                        role="button">Validate</a>
+                                        href="/peminjaman/pinjamkan/{{ $item->id_peminjaman }}" role="button">Pinjamkan</a>
 
                                 </td>
                             @endif
@@ -54,16 +57,15 @@
                         </tr>
                     @endforeach
                 @endif
+
             </tbody>
             <tfoot>
                 <tr>
                     <th>No</th>
-                    <th>Kode Barang</th>
                     <th>Nama Barang</th>
-                    <th>Kategori</th>
-                    <th>Satuan</th>
                     <th>Quantity</th>
-                    <th>Tujuan</th>
+                    <th>Peminjam</th>
+                    <th>Tanggal Kembali</th>
                     <th>Aksi</th>
                 </tr>
             </tfoot>
@@ -113,12 +115,12 @@
 
             Swal.fire({
                 title: "Are you sure?",
-                text: "Yakin Validasi data?",
+                text: "Yakin Pinjamkan barang?",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
-                confirmButtonText: "Ya,Validasi!"
+                confirmButtonText: "Ya,Pinjamkan!"
             }).then((result) => {
                 if (result.isConfirmed) {
                     window.location.href = href;
@@ -135,7 +137,7 @@
         @if (session('Gagal'))
             Swal.fire({
                 icon: 'error',
-                title: 'Gagal',
+                title: 'Error',
                 text: '{{ session('Gagal') }}',
             });
         @endif

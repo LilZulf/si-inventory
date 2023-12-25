@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\PjController;
 use App\Http\Controllers\RuangController;
 use App\Http\Controllers\KategoriController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\BarangMasukController;
 use App\Http\Controllers\BarangKeluarController;
+use App\Http\Controllers\PeminjamanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,7 +33,15 @@ Route::put('/ruangan/update/{id}', [RuangController::class, 'update']);
 Route::delete('/ruangan/delete/{id}', [RuangController::class, 'destroy']);
 // Route::delete('/ruangan/delete/{id}', [RuangController::class, 'destroy'])->name('ruangan.delete');
 
+//PJ
+Route::get('/pj', [PjController::class, 'index']);
+Route::get('/pj/tambah', [PjController::class, 'tambah']);
+Route::post('/pj/tambah', [PjController::class, 'create']);
+Route::get('/pj/edit/{id}', [PjController::class, 'updatePage']);
+Route::put('/pj/update/{id}', [PjController::class, 'update']);
+Route::delete('/pj/delete/{id}', [PjController::class, 'destroy']);
 
+//Barang
 Route::get('/barang', [BarangController::class, 'index']);
 Route::get('/barang/tambah', [BarangController::class, 'tambah']);
 Route::post('/barang/tambah', [BarangController::class, 'create']);
@@ -41,6 +51,7 @@ Route::get('/barang/delete/{id}', [BarangController::class, 'delete']);
 
 Route::get('/barang/ruang', [BarangController::class, 'indexBarang']);
 Route::get('/barang/ruang/info/{id}', [BarangController::class, 'infoBarang']);
+Route::get('/barang/ruang/kembalikan/{id}', [BarangController::class, 'kembalikan']);
 
 Route::get('/barang/masuk', [BarangMasukController::class, 'index']);
 Route::get('/barang/masuk/tambah', [BarangMasukController::class, 'tambah']);
@@ -66,3 +77,12 @@ Route::post('/kategori/tambah',[KategoriController::class,'Create']);
 Route::get('/kategori/edit/{id}',[KategoriController::class,'Rubah']);
 Route::put('/kategori/edit/{id}',[KategoriController::class, 'Edit']);
 Route::get('/kategori/delete/{id}',[KategoriController::class, 'Delete']);
+
+Route::get('/peminjaman', [PeminjamanController::class, 'index']);
+Route::get('/peminjaman/tambah', [PeminjamanController::class, 'tambah']);
+Route::post('/peminjaman/tambah', [PeminjamanController::class, 'create']);
+Route::get('/peminjaman/edit/{id}', [PeminjamanController::class, 'edit']);
+Route::put('/peminjaman/update/{id}', [PeminjamanController::class, 'editproses']);
+Route::get('/peminjaman/delete/{id}', [PeminjamanController::class, 'delete']);
+Route::get('/peminjaman/pinjamkan/{id}', [PeminjamanController::class, 'pinjamkan']);
+Route::get('/peminjaman/kembalikan/{id}', [PeminjamanController::class, 'kembalikan']);
