@@ -21,7 +21,7 @@
                 @foreach ($barangData as $index => $data)
                     <tr>
                         <td>{{ $index + 1 }}</td>
-                        <td>{{ $data['ruangan'] }}</td>
+                        <td>{{ $data['ruangan']}}</td>
                         <td>{{ $data['jumlah_keluar'] }}</td>
                         <td><a class="btn btn-primary" href="/barang/ruang/info/{{ $index + 1 }}" role="button">Info</a></td>
                     </tr>

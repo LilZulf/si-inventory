@@ -35,7 +35,7 @@
                             <td>{{ $item->satuan }}</td>
                             <td>{{ $item->jumlah_keluar }}</td>
                             <td>{{ $item->ruangan }}</td>
-                            @if ($item->status == 'validate')
+                            @if ($item->status == 'validate' || $item->status == 'returned')
                                 <td>
                                     <a class="btn btn-success disabled" href="" role="button">Validated</a>
                                 </td>
