@@ -75,7 +75,7 @@ class BarangKeluarController extends Controller
         $barang->update([
             'id_barang' => $request->barang,
             'jumlah_keluar' => $request->jumlah,
-            'id_barang' =>$request->ruang,
+            'id_ruang' =>$request->ruang,
             'status' => 'waiting',
         ]);
     
