@@ -51,6 +51,7 @@ Route::get('/barang/delete/{id}', [BarangController::class, 'delete']);
 
 Route::get('/barang/ruang', [BarangController::class, 'indexBarang']);
 Route::get('/barang/ruang/info/{id}', [BarangController::class, 'infoBarang']);
+Route::get('/barang/ruang/kembalikan/{id}', [BarangController::class, 'kembalikan']);
 
 Route::get('/barang/masuk', [BarangMasukController::class, 'index']);
 Route::get('/barang/masuk/tambah', [BarangMasukController::class, 'tambah']);
