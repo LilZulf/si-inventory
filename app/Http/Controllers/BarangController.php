@@ -164,10 +164,6 @@ public function kembalikan($id)
     $jumlahKeluar = $barangKeluar->jumlah_keluar;
     $jumlahSaatIni = $barang->jumlah;
 
-    // Pastikan barang yang dikembalikan tidak melebihi jumlah yang keluar
-    if ($jumlahKeluar > $jumlahSaatIni) {
-        return redirect('/barang/ruang/info/' . $barangKeluar->id_ruang)->with('Gagal', "Gagal mengembalikan Barang, Jumlah Barang Keluar Melebihi Stock Barang, Silahkan Update Barang");
-    }
 
     // Kurangkan jumlah yang keluar dari jumlah saat ini
     $jumlahBaru = $jumlahSaatIni + $jumlahKeluar;
