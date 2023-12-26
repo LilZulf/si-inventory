@@ -8,4 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Ruang extends Model
 {
     use HasFactory;
+
+    public function pj()
+    {
+        return $this->belongsTo(Pj::class, 'id_pj', 'id');
+    }
+
+    protected $fillable = [
+        'kode_ruangan',
+        'ruangan',
+        'id_pj',
+        'keterangan'
+    ];
 }
