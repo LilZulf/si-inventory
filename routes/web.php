@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PjController;
 use App\Http\Controllers\RuangController;
 use App\Http\Controllers\KategoriController;
@@ -86,3 +87,10 @@ Route::put('/peminjaman/update/{id}', [PeminjamanController::class, 'editproses'
 Route::get('/peminjaman/delete/{id}', [PeminjamanController::class, 'delete']);
 Route::get('/peminjaman/pinjamkan/{id}', [PeminjamanController::class, 'pinjamkan']);
 Route::get('/peminjaman/kembalikan/{id}', [PeminjamanController::class, 'kembalikan']);
+
+Route::get('/admin',[AdminController::class, 'index']);
+Route::get('/admin/tambah',[AdminController::class, 'tambah']);
+Route::post('/admin/tambah',[AdminController::class, 'create']);
+Route::get('/admin/edit/{id}',[AdminController::class, 'editIndex']);
+Route::put('/admin/edit/{id}',[AdminController::class, 'edit']);
+Route::get('/admin/delete/{id}',[AdminController::class, 'delete']);

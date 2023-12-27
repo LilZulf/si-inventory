@@ -105,7 +105,7 @@
                             </a>
                             <ul class="submenu ">
                                 <li class="submenu-item  ">
-                                    <a href="foUsersuill.html" class="submenu-link">Admin</a>
+                                    <a href="/admin" class="submenu-link">Admin</a>
                                 </li>
                                 <li class="submenu-item  ">
                                     <a href="/pj" class="submenu-link">PJ Ruangan</a>
