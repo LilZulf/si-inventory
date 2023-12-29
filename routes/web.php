@@ -9,6 +9,7 @@ use App\Http\Controllers\BarangController;
 use App\Http\Controllers\BarangMasukController;
 use App\Http\Controllers\BarangKeluarController;
 use App\Http\Controllers\PeminjamanController;
+use App\Http\Controllers\BarangRusakDalamController;
 
 /*
 |--------------------------------------------------------------------------
@@ -94,3 +95,11 @@ Route::post('/admin/tambah',[AdminController::class, 'create']);
 Route::get('/admin/edit/{id}',[AdminController::class, 'editIndex']);
 Route::put('/admin/edit/{id}',[AdminController::class, 'edit']);
 Route::get('/admin/delete/{id}',[AdminController::class, 'delete']);
+//Barang Rusak
+Route::get('/rusak/dalam', [BarangRusakDalamController::class, 'index']);
+Route::get('/rusak/dalam/tambah', [BarangRusakDalamController::class, 'tambah']);
+Route::post('/rusak/dalam/tambah', [BarangRusakDalamController::class, 'create']);
+Route::get('/rusak/dalam/edit/{id}', [BarangRusakDalamController::class, 'updatePage']);
+Route::put('/rusak/dalam/update/{id}', [BarangRusakDalamController::class, 'update']);
+Route::get('/rusak/dalam/delete/{id}', [BarangRusakDalamController::class, 'delete']);
+Route::post('/rusak/dalam/saveStatus', [BarangRusakDalamController::class,'changeStatus']);

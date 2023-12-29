@@ -20,4 +20,9 @@ class Ruang extends Model
         'id_pj',
         'keterangan'
     ];
+
+    public function rusak_dalams()
+    {
+        return $this->hasMany(RusakDalam::class, 'id_ruangan');
+    }
 }

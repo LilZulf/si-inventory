@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\RusakDalam;
 use App\Helpers\HashHelper;
 
 class Pj extends Model
@@ -23,6 +24,11 @@ class Pj extends Model
     public static function createEncryptedPassword($password)
     {
         return HashHelper::encryptPassword($password);
+    }
+
+    public function rusak_dalams()
+    {
+        return $this->hasMany(RusakDalam::class, 'id_pj');
     }
 
 
