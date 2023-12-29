@@ -33,6 +33,8 @@
                         <td>{{ $data->created_at_formatted }}</td>
                         <td> <a class="btn btn-warning kembalikan"
                                 href="/barang/ruang/kembalikan/{{ $data->id_barang_keluar }}" role="button">Kembalikan</a>
+                            <a class="btn btn-success"
+                                href="/barang/qr/{{ $data->id_barang_keluar }}" role="button">Tampilkan Qr</a>
                         </td>
                     </tr>
                 @endforeach
