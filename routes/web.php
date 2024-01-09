@@ -10,6 +10,7 @@ use App\Http\Controllers\BarangMasukController;
 use App\Http\Controllers\BarangKeluarController;
 use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\BarangRusakDalamController;
+use App\Http\Controllers\BarangRusakLuarController;
 
 /*
 |--------------------------------------------------------------------------
@@ -96,6 +97,7 @@ Route::post('/admin/tambah',[AdminController::class, 'create']);
 Route::get('/admin/edit/{id}',[AdminController::class, 'editIndex']);
 Route::put('/admin/edit/{id}',[AdminController::class, 'edit']);
 Route::get('/admin/delete/{id}',[AdminController::class, 'delete']);
+
 //Barang Rusak
 Route::get('/rusak/dalam', [BarangRusakDalamController::class, 'index']);
 Route::get('/rusak/dalam/tambah', [BarangRusakDalamController::class, 'tambah']);
@@ -104,3 +106,11 @@ Route::get('/rusak/dalam/edit/{id}', [BarangRusakDalamController::class, 'update
 Route::put('/rusak/dalam/update/{id}', [BarangRusakDalamController::class, 'update']);
 Route::get('/rusak/dalam/delete/{id}', [BarangRusakDalamController::class, 'delete']);
 Route::post('/rusak/dalam/saveStatus', [BarangRusakDalamController::class,'changeStatus']);
+
+Route::get('/rusak/luar', [BarangRusakLuarController::class, 'index']);
+Route::get('/rusak/luar/tambah', [BarangRusakLuarController::class, 'tambah']);
+Route::post('/rusak/luar/tambah', [BarangRusakLuarController::class, 'create']);
+Route::get('/rusak/luar/edit/{id}', [BarangRusakLuarController::class, 'updatePage']);
+Route::put('/rusak/luar/update/{id}', [BarangRusakLuarController::class, 'update']);
+Route::get('/rusak/luar/delete/{id}', [BarangRusakLuarController::class, 'delete']);
+Route::post('/rusak/luar/saveStatus', [BarangRusakLuarController::class,'changeStatus']);

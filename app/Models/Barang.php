@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\RusakDalam;
+use App\Models\RusakRuangan;
 
 class Barang extends Model
 {
@@ -16,5 +17,10 @@ class Barang extends Model
     public function rusak_dalams()
     {
         return $this->hasMany(RusakDalam::class, 'id_barang');
+    }
+
+    public function rusak_ruangans()
+    {
+        return $this->hasMany(RusakRuangan::class, 'id_barang');
     }
 }

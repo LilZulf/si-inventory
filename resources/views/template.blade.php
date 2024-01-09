@@ -149,7 +149,7 @@
                         </li>
 
                         <li class="sidebar-item  ">
-                            <a href="index.html" class='sidebar-link'>
+                            <a href="/rusak/luar" class='sidebar-link'>
                                 <i class="bi bi-cart-x-fill"></i>
                                 <span>Barang Rusak Luar</span>
                             </a>
