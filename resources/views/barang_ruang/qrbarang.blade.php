@@ -36,10 +36,18 @@
                 </div>
             </div>
         </div>
+        <div class="text-center mt-3">
+            <button class="btn btn-primary" onclick="printPage()">Print</button>
+        </div>
     </div>
 
     <!-- Optional: Add your scripts here if needed -->
 
 </body>
+<script>
+    function printPage() {
+        window.print();
+    }
+</script>
 
 </html>
