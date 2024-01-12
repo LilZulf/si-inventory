@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invneto - Al-Ishlahiyah</title>
+    <title>Invento - Al-Ishlahiyah</title>
 
     <link rel="shortcut icon" href="{{ asset('dist/assets/compiled/svg/favicon.svg') }}" type="image/x-icon">
     <link rel="shortcut icon"
@@ -130,7 +130,7 @@
                         <li class="sidebar-item  ">
                             <a href="/barang/keluar" class='sidebar-link'>
                                 <i class="bi bi-file-arrow-up-fill"></i>
-                                <span>Barang keluar</span>
+                                <span>Barang Keluar</span>
                             </a>
                         </li>
 
@@ -142,16 +142,16 @@
                         </li>
 
                         <li class="sidebar-item  ">
-                            <a href="index.html" class='sidebar-link'>
+                            <a href="/rusak/dalam" class='sidebar-link'>
                                 <i class="bi bi-building-fill-exclamation"></i>
                                 <span>Barang Rusak Ruangan</span>
                             </a>
                         </li>
 
                         <li class="sidebar-item  ">
-                            <a href="index.html" class='sidebar-link'>
+                            <a href="/rusak/luar" class='sidebar-link'>
                                 <i class="bi bi-cart-x-fill"></i>
-                                <span>Barang Rusak Dalam</span>
+                                <span>Barang Rusak Luar</span>
                             </a>
                         </li>
 
