@@ -110,9 +110,40 @@ class BarangRusakLuarController extends Controller
         }
     }
 
+    public function validasi($id){
+        $rusakLuar = RusakRuangan::find($id);
+        // dd($barangKeluar);
+        $barang = Barang::find($rusakLuar->id_barang);
+        $jumlah = $barang->jumlah;
+        $jumlah = floatval($jumlah);
+        $newJumlah = $rusakLuar->jumlah_rusak;
+        //$newJumlah = floatval($newJumlah);
+        $sum = $jumlah - $newJumlah;
+        if($sum < 0){
+            return redirect('/rusak/luar')->with('Gagal', "Gagal Validasi Barang, Jumlah Barang Rusak Melebihi Stock Barang, Silahkan Update Barang!");
+        } else{
+            $barang->update([
+                'jumlah' => $sum,
+            ]);
+            $rusakLuar->update([
+                'status' => 2,
+            ]);
+            return redirect('/rusak/luar')->with('success', "Berhasil Validasi Barang");
+        }
+    }
+
     public function changeStatus(Request $request)
     {
         $rusakluar = RusakRuangan::find($request->id_rusak_luar);
+        $barang = Barang::find($rusakluar->id_barang);
+        $jumlah = $barang->jumlah;
+        $jumlah = floatval($jumlah);
+        $newJumlah = $rusakluar->jumlah_rusak;
+        $sum = $jumlah + $newJumlah;
+        $barang->update([
+            'jumlah' => $sum,
+        ]);
+        
         $rusakluar->status = $rusakluar->status + 1;
         $rusakluar->save();
 

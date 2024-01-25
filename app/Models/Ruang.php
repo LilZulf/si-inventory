@@ -20,6 +20,7 @@ class Ruang extends Model
         'id_pj',
         'keterangan'
     ];
+    public $timestamps = true;
 
     public function rusak_dalams()
     {

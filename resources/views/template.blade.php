@@ -155,11 +155,31 @@
                             </a>
                         </li>
 
-                        <li class="sidebar-item  ">
-                            <a href="index.html" class='sidebar-link'>
-                                <i class="bi bi-newspaper"></i>
+                        <li class="sidebar-item  has-sub">
+                            <a href="#" class='sidebar-link'>
+                                <i class="bi bi-database-fill"></i>
                                 <span>Laporan</span>
                             </a>
+                            <ul class="submenu ">
+                                <li class="submenu-item  ">
+                                    <a href="/laporan/barangMasuk" class="submenu-link">Barang Masuk</a>
+                                </li>
+                                <li class="submenu-item  ">
+                                    <a href="/laporan/barangKeluar" class="submenu-link">Barang Keluar</a>
+                                </li>
+                                <li class="submenu-item  ">
+                                    <a href="/laporan/peminjaman" class="submenu-link">Data Peminjaman</a>
+                                </li>
+                                <li class="submenu-item  ">
+                                    <a href="/laporan/barangRuangan" class="submenu-link">Barang Ruangan</a>
+                                </li>
+                                <li class="submenu-item  ">
+                                    <a href="/laporan/rusakLuar" class="submenu-link">Barang Rusak Luar</a>
+                                </li>
+                                <li class="submenu-item  ">
+                                    <a href="/laporan/rusakDalam" class="submenu-link">Barang Rusak Dalam</a>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
                 </div>

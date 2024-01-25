@@ -112,6 +112,6 @@ class BarangKeluarController extends Controller
             ]);
             return redirect('/barang/keluar')->with('success', "Berhasil Validasi Barang");
         }
-        
     }
+    
 }
