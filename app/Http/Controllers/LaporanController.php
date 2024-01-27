@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\BarangKeluarExport;
 use App\Models\RusakDalam;
 use App\Models\RusakRuangan;
 use App\Models\Barang;
@@ -12,6 +13,10 @@ use App\Models\BarangKeluar;
 
 use Illuminate\Http\Request;
 use App\Exports\LaporanExport;
+use App\Exports\PinjamExport;
+use App\Exports\RuanganExport;
+use App\Exports\RusakDalamExport;
+use App\Exports\RusakLuarExport;
 use Illuminate\Support\Facades\DB;
 use Excel;
 use PDF;
@@ -44,15 +49,20 @@ class LaporanController extends Controller
                 $laporanRusakDalam->where('rusak_dalams.status', $status);
             }
         $laporanRusakDalam = $laporanRusakDalam->get();
+        session(['mulai' =>$tanggalMulai]);
+        session(['selesai' => $tanggalSelesai]);
+        session(['status' => $status]);
 
         if ($request->input('action') == 'filter') {
             // Proses filter
             return view('laporan.laporanRusakDalam', ['rusakDalam' => $laporanRusakDalam]);
         } elseif ($request->input('action') == 'excel') {
             // Proses export Excel
-            $export = new LaporanExport($laporanRusakDalam);
-
-            return Excel::download($export, 'rekap_' . $tanggalMulai . ' - ' . $tanggalSelesai . '.xlsx');
+            // $export = new LaporanExport($laporanRusakDalam);
+            $sesiMulai = session('mulai');
+            $sesiSelesai = session('selesai');
+            $status = session('status');
+            return Excel::download(new RusakDalamExport($sesiMulai,$sesiSelesai,$status), 'rekap_' . $tanggalMulai . ' - ' . $tanggalSelesai . '.xlsx');
         } else {
             $pdf = PDF::loadView('laporan.pdfRusakDalam', [
                 'rusakDalam' => $laporanRusakDalam
@@ -86,15 +96,21 @@ class LaporanController extends Controller
                 $laporanRusakLuar->where('rusak_ruangans.status', $status);
             }
         $laporanRusakLuar = $laporanRusakLuar->get();
+        session(['mulai' =>$tanggalMulai]);
+        session(['selesai' => $tanggalSelesai]);
+        session(['status' => $status]);
 
         if ($request->input('action') == 'filter') {
             // Proses filter
             return view('laporan.laporanRusakLuar', ['rusakLuar' => $laporanRusakLuar]);
         } elseif ($request->input('action') == 'excel') {
             // Proses export Excel
-            $export = new LaporanExport($laporanRusakLuar);
+            // $export = new LaporanExport($laporanRusakLuar);
+            $sesiMulai = session('mulai');
+            $sesiSelesai = session('selesai');
+            $status = session('status');
 
-            return Excel::download($export, 'rekap_' . $tanggalMulai . ' - ' . $tanggalSelesai . '.xlsx');
+            return Excel::download(new RusakLuarExport($sesiMulai,$sesiSelesai,$status), 'rekap_' . $tanggalMulai . ' - ' . $tanggalSelesai . '.xlsx');
         } else {
             $pdf = PDF::loadView('laporan.pdfRusakLuar', [
                 'rusakLuar' => $laporanRusakLuar
@@ -125,20 +141,23 @@ class LaporanController extends Controller
             ->select('barang_masuks.*', 'barangs.nama_barang', 'barangs.created_at as barang_created_at', 'barangs.updated_at as barang_updated_at')
             ->whereBetween('barang_masuks.created_at', [$tanggalMulai, $tanggalSelesai])
             ->get();
+        session(['mulai' =>$tanggalMulai]);
+        session(['selesai' => $tanggalSelesai]);    
+            // Format ulang tanggal pada $laporanBarangMasuk untuk ditampilkan
+            foreach ($laporanBarangMasuk as $item) {
+                $item->formatted_updated_at = \Carbon\Carbon::parse($item->updated_at)->format('d-m-Y');
+            }
+            
+            if ($request->input('action') == 'filter') {
+                // Proses filter
+                return view('laporan.laporanBarangMasuk', ['barangMasuk' => $laporanBarangMasuk]);
+            } elseif ($request->input('action') == 'excel') {
+                // Proses export Excel
+                // $export = new LaporanExport($laporanBarangMasuk);
+                $sesiMulai = session('mulai');
+                $sesiSelesai = session('selesai');
 
-         // Format ulang tanggal pada $laporanBarangMasuk untuk ditampilkan
-        foreach ($laporanBarangMasuk as $item) {
-            $item->formatted_updated_at = \Carbon\Carbon::parse($item->updated_at)->format('d-m-Y');
-        }
-
-        if ($request->input('action') == 'filter') {
-            // Proses filter
-            return view('laporan.laporanBarangMasuk', ['barangMasuk' => $laporanBarangMasuk]);
-        } elseif ($request->input('action') == 'excel') {
-            // Proses export Excel
-            $export = new LaporanExport($laporanBarangMasuk);
-
-            return Excel::download($export, 'rekap_' . $tanggalMulai . ' - ' . $tanggalSelesai . '.xlsx');
+            return Excel::download(new LaporanExport($sesiMulai,$sesiSelesai), 'rekap_' . $tanggalMulai . ' - ' . $tanggalSelesai . '.xlsx');
         } else {
             $pdf = PDF::loadView('laporan.pdfBarangMasuk', [
                 'barangMasuk' => $laporanBarangMasuk
@@ -170,6 +189,8 @@ class LaporanController extends Controller
             ->select('barang_keluars.*', 'barangs.nama_barang', 'ruangs.ruangan', 'barangs.created_at as barang_created_at', 'barangs.updated_at as barang_updated_at', 'ruangs.created_at as ruang_created_at', 'ruangs.updated_at as ruang_updated_at')
             ->whereBetween('barang_keluars.created_at', [$tanggalMulai, $tanggalSelesai])
             ->get();
+            session(['mulai' =>$tanggalMulai]);
+            session(['selesai' => $tanggalSelesai]); 
 
         // Format ulang tanggal pada $laporanBarangKeluar untuk ditampilkan
         foreach ($laporanBarangKeluar as $item) {
@@ -181,9 +202,11 @@ class LaporanController extends Controller
             return view('laporan.laporanBarangKeluar', ['barangKeluar' => $laporanBarangKeluar]);
         } elseif ($request->input('action') == 'excel') {
             // Proses export Excel
-            $export = new LaporanExport($laporanBarangKeluar);
+            // $export = new BarangKeluarExport($laporanBarangKeluar);
+            $sesiMulai = session('mulai');
+            $sesiSelesai = session('selesai');
 
-            return Excel::download($export, 'rekap_' . $tanggalMulai . ' - ' . $tanggalSelesai . '.xlsx');
+            return Excel::download(new BarangKeluarExport($sesiMulai,$sesiSelesai), 'rekap_' . $tanggalMulai . ' - ' . $tanggalSelesai . '.xlsx');
         } else {
             $pdf = PDF::loadView('laporan.pdfBarangKeluar', [
                 'barangKeluar' => $laporanBarangKeluar
@@ -218,6 +241,9 @@ class LaporanController extends Controller
                 $laporanPeminjaman->where('peminjamans.status', $status);
             }
         $laporanPeminjaman = $laporanPeminjaman->get();
+        session(['mulai' =>$tanggalMulai]);
+        session(['selesai' => $tanggalSelesai]);
+        session(['status' => $status]); 
 
         // Format ulang tanggal pada $laporanPeminjaman untuk ditampilkan
         foreach ($laporanPeminjaman as $item) {
@@ -229,9 +255,11 @@ class LaporanController extends Controller
             return view('laporan.laporanPeminjaman', ['peminjaman' => $laporanPeminjaman]);
         } elseif ($request->input('action') == 'excel') {
             // Proses export Excel
-            $export = new LaporanExport($laporanPeminjaman);
-
-            return Excel::download($export, 'rekap_' . $tanggalMulai . ' - ' . $tanggalSelesai . '.xlsx');
+            // $export = new LaporanExport($laporanPeminjaman);
+            $sesiMulai = session('mulai');
+            $sesiSelesai = session('selesai');
+            $status = session('status');
+            return Excel::download(new PinjamExport($sesiMulai,$sesiSelesai,$status), 'rekap_' . $tanggalMulai . ' - ' . $tanggalSelesai . '.xlsx');
         } else {
             $pdf = PDF::loadView('laporan.pdfPeminjaman', [
                 'peminjaman' => $laporanPeminjaman
@@ -276,15 +304,19 @@ class LaporanController extends Controller
             ->where('barang_keluars.id_ruang', '=', $pilihRuangan)
             ->where('barang_keluars.status', '=', 'validate')
             ->get();
+            session(['pilihRuangan' =>$pilihRuangan]);
+            // dd($laporanBarangRuangan);
+            $milihRuangan = Ruang::where('id',$pilihRuangan)->select('ruangan')->get()->first();
 
         if ($request->input('action') == 'filter') {
             // Proses filter
             return view('laporan.laporanBarangRuangan', ['barangRuangan' => $laporanBarangRuangan, 'ruangans' => $ruangan]);
         } elseif ($request->input('action') == 'excel') {
             // Proses export Excel
-            $export = new LaporanExport($laporanBarangRuangan);
-
-            return Excel::download($export, 'rekap_' .  '.xlsx');
+            // $export = new LaporanExport($laporanBarangRuangan);
+            $pilihRuangan = session('pilihRuangan');
+            $intgerTok = intval($pilihRuangan);
+            return Excel::download(new RuanganExport($intgerTok), 'rekap_' .$milihRuangan. '.xlsx');
         } else {
             $pdf = PDF::loadView('laporan.pdfBarangRuangan', [
                 'barangRuangan' => $laporanBarangRuangan
