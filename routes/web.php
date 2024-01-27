@@ -11,6 +11,7 @@ use App\Http\Controllers\BarangKeluarController;
 use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\BarangRusakDalamController;
 use App\Http\Controllers\BarangRusakLuarController;
+use App\Http\Controllers\LaporanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -105,6 +106,7 @@ Route::post('/rusak/dalam/tambah', [BarangRusakDalamController::class, 'create']
 Route::get('/rusak/dalam/edit/{id}', [BarangRusakDalamController::class, 'updatePage']);
 Route::put('/rusak/dalam/update/{id}', [BarangRusakDalamController::class, 'update']);
 Route::get('/rusak/dalam/delete/{id}', [BarangRusakDalamController::class, 'delete']);
+Route::get('/rusak/dalam/validasi/{id}', [BarangRusakDalamController::class, 'validasi']);
 Route::post('/rusak/dalam/saveStatus', [BarangRusakDalamController::class,'changeStatus']);
 
 Route::get('/rusak/luar', [BarangRusakLuarController::class, 'index']);
@@ -113,4 +115,18 @@ Route::post('/rusak/luar/tambah', [BarangRusakLuarController::class, 'create']);
 Route::get('/rusak/luar/edit/{id}', [BarangRusakLuarController::class, 'updatePage']);
 Route::put('/rusak/luar/update/{id}', [BarangRusakLuarController::class, 'update']);
 Route::get('/rusak/luar/delete/{id}', [BarangRusakLuarController::class, 'delete']);
+Route::get('/rusak/luar/validasi/{id}', [BarangRusakLuarController::class, 'validasi']);
 Route::post('/rusak/luar/saveStatus', [BarangRusakLuarController::class,'changeStatus']);
+
+Route::get('/laporan/rusakDalam', [LaporanController::class, 'rusakDalam']);
+Route::post('/laporan/rusakDalam', [LaporanController::class, 'prosesLaporanRusakDalam']);
+Route::get('/laporan/rusakLuar', [LaporanController::class, 'rusakLuar']);
+Route::post('/laporan/rusakLuar', [LaporanController::class, 'prosesLaporanRusakLuar']);
+Route::get('/laporan/barangMasuk', [LaporanController::class, 'barangMasuk']);
+Route::post('/laporan/barangMasuk', [LaporanController::class, 'prosesLaporanBarangMasuk']);
+Route::get('/laporan/barangKeluar', [LaporanController::class, 'barangKeluar']);
+Route::post('/laporan/barangKeluar', [LaporanController::class, 'prosesLaporanBarangKeluar']);
+Route::get('/laporan/peminjaman', [LaporanController::class, 'peminjaman']);
+Route::post('/laporan/peminjaman', [LaporanController::class, 'prosesLaporanPeminjaman']);
+Route::get('/laporan/barangRuangan', [LaporanController::class, 'barangRuangan']);
+Route::post('/laporan/barangRuangan', [LaporanController::class, 'prosesLaporanBarangRuangan']);

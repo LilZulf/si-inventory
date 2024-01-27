@@ -11,4 +11,5 @@ class Peminjaman extends Model
     protected $table = 'peminjamans';
     protected $primaryKey = 'id_peminjaman';
     protected $fillable = ['id_barang','jumlah_pinjam','id_ruang','peminjam','status'];
+    public $timestamps = true;
 }

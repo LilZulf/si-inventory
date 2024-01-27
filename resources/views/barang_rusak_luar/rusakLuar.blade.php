@@ -33,24 +33,34 @@
                             <td>{{ $item->nama_pj }}</td>
                             <td>{{ $item->nama_barang }}</td>
                             <td>{{ $item->jumlah_rusak }}</td>
-                            <td>{{ $item->tanggal_rusak }}</td>
+                            <td>{{ \Carbon\Carbon::parse($item->tanggal_rusak)->format('d-m-Y') }}</td>
                             <td>
                                 @if($item->status == 1 )
-                                    <span class="badge bg-primary">Rusak</span>
-                                @elseif($item->status == 2)
-                                    <span class="badge bg-secondary">Sudah Diperbaiki</span>
+                                    <span class="badge bg-primary">Waiting</span>
+                                @elseif($item->status == 2 )
+                                    <span class="badge bg-danger">Rusak</span>
+                                @elseif($item->status == 3)
+                                    <span class="badge bg-success">Sudah Diperbaiki</span>
                                 @endif
                             </td>
-                            <td><a class="btn btn-warning" href="/rusak/luar/edit/{{ $item->id_rusak_luar }}"
+                            <td>
+                                @if($item->status == 1 )
+                                <a class="btn btn-warning" href="/rusak/luar/edit/{{ $item->id_rusak_luar }}"
                                     role="button">Ubah</a>
                                 <a class="btn btn-danger" href="/rusak/luar/delete/{{ $item->id_rusak_luar }}"
                                     role="button">Hapus</a>
-                                @if($item->status == 1 )
+                                <a id="confirm" class="btn btn-primary validasi"
+                                    href="/rusak/luar/validasi/{{ $item->id_rusak_luar }}"
+                                    role="button">Validate</a>
+                                @elseif($item->status == 2 )
                                 <form action="{{ url('/rusak/luar/saveStatus') }}" method="post" class="btn p-0" name="input-form" id="input-form">
                                     {{ csrf_field() }}
                                     <input type="text" id="id_rusak_luar" value="{{$item->id_rusak_luar}}" name="id_rusak_luar" hidden>
                                     <button type="submit" onclick="submitForm(event)" class="btn icon btn-success" ><i class="bi bi-check"></i></button>
                                 </form>
+                                @else
+                                <a class="btn btn-danger" href="/rusak/luar/delete/{{ $item->id_rusak_luar }}"
+                                    role="button">Hapus</a>
                                 @endif
                             </td>
                         </tr>
@@ -122,6 +132,40 @@
                 icon: 'success',
                 title: 'Berhasil',
                 text: '{{ session('success') }}',
+            });
+        @endif
+    </script>
+    <script>
+        $('.validasi').on('click', function(e) {
+            e.preventDefault();
+            var href = $(this).attr('href');
+
+            Swal.fire({
+                title: "Are you sure?",
+                text: "Yakin Validasi data?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Ya,Validasi!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = href;
+                }
+            });
+        });
+        @if (session('success'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil',
+                text: '{{ session('success') }}',
+            });
+        @endif
+        @if (session('Gagal'))
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal',
+                text: '{{ session('Gagal') }}',
             });
         @endif
     </script>

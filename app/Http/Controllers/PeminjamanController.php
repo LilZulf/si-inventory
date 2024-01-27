@@ -22,7 +22,7 @@ class PeminjamanController extends Controller
         ->select('peminjamans.*','barangs.nama_barang','barangs.satuan','barangs.kode_barang','kategoris.nama_kategori','ruangs.ruangan')
         ->get();
         $barangs->transform(function ($item, $key) {
-            $item->created_at_formatted = Carbon::parse($item->update_at)->format('d-m-Y');
+            $item->created_at_formatted = Carbon::parse($item->updated_at)->format('d-m-Y');
             return $item;
         });
         return view ('peminjaman.peminjaman',['barangs'=>$barangs]);

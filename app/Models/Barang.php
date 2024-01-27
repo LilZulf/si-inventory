@@ -13,6 +13,7 @@ class Barang extends Model
     protected $table = 'barangs';
     protected $primaryKey = 'id_barang';
     protected $fillable = ['id_barang','nama_barang','kode_barang','satuan','jumlah','id_kategori'];
+    public $timestamps = true;
 
     public function rusak_dalams()
     {
