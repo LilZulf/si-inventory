@@ -1,3 +1,8 @@
+@php
+    use Illuminate\Support\Facades\Auth;
+    $currentPath = Request::path();
+    $user = Auth::user();
+@endphp
 <!DOCTYPE html>
 <html lang="en">
 
@@ -73,89 +78,103 @@
                     <ul class="menu">
                         <li class="sidebar-title">Menu</li>
 
-                        <li class="sidebar-item active ">
-                            <a href="index.html" class='sidebar-link'>
+                        <li class="sidebar-item {{ $currentPath == '/' ? 'active' : '' }} ">
+                            <a href="/" class='sidebar-link'>
                                 <i class="bi bi-grid-fill"></i>
                                 <span>Dashboard</span>
                             </a>
                         </li>
 
-                        <li class="sidebar-item  has-sub">
+                        <li
+                            class="sidebar-item  has-sub
+                             {{ in_array($currentPath, ['barang', 'ruangan', 'kategori']) ? 'active' : '' }}">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-database-fill"></i>
                                 <span>Master</span>
                             </a>
                             <ul class="submenu ">
-                                <li class="submenu-item  ">
+                                <li class="submenu-item {{ $currentPath == 'barang' ? 'active' : '' }} ">
                                     <a href="/barang" class="submenu-link">Barang</a>
                                 </li>
-                                <li class="submenu-item  ">
+                                <li class="submenu-item {{ $currentPath == 'ruangan' ? 'active' : '' }}  ">
                                     <a href="/ruangan" class="submenu-link">Ruangan</a>
                                 </li>
-                                <li class="submenu-item  ">
+                                <li class="submenu-item {{ $currentPath == 'kategori' ? 'active' : '' }}  ">
                                     <a href="/kategori" class="submenu-link">Kategori</a>
                                 </li>
                             </ul>
                         </li>
 
-                        <li class="sidebar-item  has-sub">
+                        <li
+                            class="sidebar-item  has-sub  {{ in_array($currentPath, ['admin', 'pj']) ? 'active' : '' }}">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-pen-fill"></i>
                                 <span>Users</span>
                             </a>
                             <ul class="submenu ">
-                                <li class="submenu-item  ">
+                                <li class="submenu-item {{ $currentPath == 'admin' ? 'active' : '' }} ">
                                     <a href="/admin" class="submenu-link">Admin</a>
                                 </li>
-                                <li class="submenu-item  ">
+                                <li class="submenu-item {{ $currentPath == 'pj' ? 'active' : '' }} ">
                                     <a href="/pj" class="submenu-link">PJ Ruangan</a>
                                 </li>
                             </ul>
                         </li>
 
-                        <li class="sidebar-item  ">
+                        <li class="sidebar-item {{ $currentPath == 'peminjaman' ? 'active' : '' }} ">
                             <a href="/peminjaman" class='sidebar-link'>
                                 <i class="bi bi-list-task"></i>
                                 <span>Peminjaman</span>
                             </a>
                         </li>
 
-                        <li class="sidebar-item  ">
+                        <li class="sidebar-item {{ $currentPath == 'barang/ruang' ? 'active' : '' }}">
                             <a href="/barang/ruang" class='sidebar-link'>
                                 <i class="bi bi-building-fill"></i>
                                 <span>Barang Ruangan</span>
                             </a>
                         </li>
 
-                        <li class="sidebar-item  ">
+                        <li class="sidebar-item {{ $currentPath == 'barang/keluar' ? 'active' : '' }} ">
                             <a href="/barang/keluar" class='sidebar-link'>
                                 <i class="bi bi-file-arrow-up-fill"></i>
                                 <span>Barang Keluar</span>
                             </a>
                         </li>
 
-                        <li class="sidebar-item  ">
+                        <li class="sidebar-item {{ $currentPath == 'barang/masuk' ? 'active' : '' }} ">
                             <a href="/barang/masuk" class='sidebar-link'>
                                 <i class="bi bi-file-arrow-down-fill"></i>
                                 <span>Barang Masuk</span>
                             </a>
                         </li>
 
-                        <li class="sidebar-item  ">
+                        <li class="sidebar-item {{ $currentPath == 'rusak/dalam' ? 'active' : '' }} ">
                             <a href="/rusak/dalam" class='sidebar-link'>
                                 <i class="bi bi-building-fill-exclamation"></i>
                                 <span>Barang Rusak Ruangan</span>
                             </a>
                         </li>
 
-                        <li class="sidebar-item  ">
+                        <li class="sidebar-item {{ $currentPath == 'rusak/luar' ? 'active' : '' }}  ">
                             <a href="/rusak/luar" class='sidebar-link'>
                                 <i class="bi bi-cart-x-fill"></i>
                                 <span>Barang Rusak Luar</span>
                             </a>
                         </li>
 
-                        <li class="sidebar-item  has-sub">
+                        <li
+                            class="sidebar-item  has-sub  
+                            {{ in_array($currentPath, [
+                                'laporan/barangMasuk',
+                                'laporan/barangKeluar',
+                                'laporan/peminjaman',
+                                'laporan/barangRuangan',
+                                'laporan/rusakLuar',
+                                'laporan/rusakDalam',
+                            ])
+                                ? 'active'
+                                : '' }}">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-database-fill"></i>
                                 <span>Laporan</span>
@@ -205,8 +224,10 @@
                                 <a href="#" data-bs-toggle="dropdown" aria-expanded="false">
                                     <div class="user-menu d-flex">
                                         <div class="user-name text-end me-3">
-                                            <h6 class="mb-0 text-gray-600">John Ducky</h6>
-                                            <p class="mb-0 text-sm text-gray-600">Administrator</p>
+                                            <h6 class="mb-0 text-gray-600">{{ $user->email }}</h6>
+                                            <p class="mb-0 text-sm text-gray-600">
+                                                {{ $user->nip ? $user->nip : 'Admin' }}
+                                            </p>
                                         </div>
                                         <div class="user-img d-flex align-items-center">
                                             <div class="avatar avatar-md">
@@ -220,19 +241,11 @@
                                     <li>
                                         <h6 class="dropdown-header">Hello, John!</h6>
                                     </li>
-                                    <li><a class="dropdown-item" href="#"><i
-                                                class="icon-mid bi bi-person me-2"></i> My
-                                            Profile</a></li>
-                                    <li><a class="dropdown-item" href="#"><i
-                                                class="icon-mid bi bi-gear me-2"></i>
-                                            Settings</a></li>
-                                    <li><a class="dropdown-item" href="#"><i
-                                                class="icon-mid bi bi-wallet me-2"></i>
-                                            Wallet</a></li>
+
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
-                                    <li><a class="dropdown-item" href="#"><i
+                                    <li><a class="dropdown-item" href="/logout"><i
                                                 class="icon-mid bi bi-box-arrow-left me-2"></i> Logout</a></li>
                                 </ul>
                             </div>
