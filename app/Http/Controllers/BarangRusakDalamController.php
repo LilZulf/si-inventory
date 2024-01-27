@@ -6,6 +6,7 @@ use App\Models\RusakDalam;
 use App\Models\Barang;
 use App\Models\Pj;
 use App\Models\Ruang;
+use App\Models\BarangKeluar;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -119,11 +120,58 @@ class BarangRusakDalamController extends Controller
         
     }
 
+    public function validasi($id){
+        $rusakDalam = RusakDalam::find($id);
+
+        if (!$rusakDalam) {
+            return redirect('/rusak/dalam')->with('Gagal', "Data Barang Rusak Dalam Tidak Ditemukan.");
+        }
+
+        $barang = BarangKeluar::find($rusakDalam->id_barang);
+
+        if (!$barang) {
+            return redirect('/rusak/dalam')->with('Gagal', "Barang yang Dipilih Tidak Ada di Ruangan, Silahkan Update Barang!");
+        }
+
+        // Pengecekan apakah ruangan pada $rusakDalam dan $barang sesuai
+        if ($rusakDalam->id_ruangan !== $barang->id_ruang) {
+            return redirect('/rusak/dalam')->with('Gagal', "Barang yang Rusak Tidak Ada di Ruangan yang Dipilih, Silahkan Update Barang!");
+        }
+
+        $jumlah = $barang->jumlah_keluar;
+        $jumlah = floatval($jumlah);
+        $newJumlah = $rusakDalam->jumlah_rusak;
+
+        //$newJumlah = floatval($newJumlah);
+        $sum = $jumlah - $newJumlah;
+
+        if($sum < 0){
+            return redirect('/rusak/dalam')->with('Gagal', "Gagal Validasi Barang, Jumlah Barang Rusak Melebihi Stock Barang Ruangan, Silahkan Update Barang!");
+        } else{
+            $barang->update([
+                'jumlah_keluar' => $sum,
+            ]);
+            $rusakDalam->update([
+                'status' => 2,
+            ]);
+            return redirect('/rusak/dalam')->with('success', "Berhasil Validasi Barang");
+        }
+    }
+
     public function changeStatus(Request $request)
     {
-        $rusakdalam = RusakDalam::find($request->id_rusak_dalam);
-        $rusakdalam->status = $rusakdalam->status + 1;
-        $rusakdalam->save();
+        $rusakDalam = RusakDalam::find($request->id_rusak_dalam);
+        $barang = BarangKeluar::find($rusakDalam->id_barang);
+        $jumlah = $barang->jumlah_keluar;
+        $jumlah = floatval($jumlah);
+        $newJumlah = $rusakDalam->jumlah_rusak;
+        $sum = $jumlah + $newJumlah;
+        $barang->update([
+            'jumlah_keluar' => $sum,
+        ]);
+
+        $rusakDalam->status = $rusakDalam->status + 1;
+        $rusakDalam->save();
 
         return redirect('/rusak/dalam/')->with('success', 'Berhasil Mengubah Status');
     }

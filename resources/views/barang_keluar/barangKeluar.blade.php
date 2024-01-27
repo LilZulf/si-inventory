@@ -35,9 +35,15 @@
                             <td>{{ $item->satuan }}</td>
                             <td>{{ $item->jumlah_keluar }}</td>
                             <td>{{ $item->ruangan }}</td>
-                            @if ($item->status == 'validate' || $item->status == 'returned')
+                            @if ($item->status == 'validate')
                                 <td>
                                     <a class="btn btn-success disabled" href="" role="button">Validated</a>
+                                </td>
+                            @elseif ($item->status == 'returned')
+                                <td>
+                                    <a class="btn btn-success disabled" href="" role="button">Returned</a>
+                                    <a class="btn btn-danger" href="/barang/keluar/delete/{{ $item->id_barang_keluar }}"
+                                        role="button">Hapus</a>
                                 </td>
                             @else
                                 <td><a class="btn btn-warning" href="/barang/keluar/edit/{{ $item->id_barang_keluar }}"

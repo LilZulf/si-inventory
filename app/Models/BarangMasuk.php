@@ -11,4 +11,5 @@ class BarangMasuk extends Model
     protected $table = 'barang_masuks';
     protected $primaryKey = 'id_barang_masuk';
     protected $fillable = ['id_barang','jumlah_masuk','status'];
+    public $timestamps = true;
 }
