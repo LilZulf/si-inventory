@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PjController;
 use App\Http\Controllers\RuangController;
 use App\Http\Controllers\KategoriController;
@@ -25,9 +26,7 @@ use App\Http\Controllers\LaporanController;
 |
 */
 Route::middleware(['auth:web'])->group(function () {
-    Route::get('/', function () {
-        return view('template');
-    });
+    Route::get('/', [DashboardController::class, 'index']);
 
     // Ruangan
     Route::get('/ruangan', [RuangController::class, 'index']);
