@@ -99,30 +99,34 @@ class BarangController extends Controller
     }
 
 
-    public function indexBarang()
-    {
-        $ruangs = Ruang::orderBy("kode_ruangan", "asc")->get();
-        $barangData = [];
 
-        foreach ($ruangs as $ruang) {
-            // Menggunakan leftJoin untuk mendapatkan data ruang yang memiliki barang keluar
-            $ruangWithKeluar = Ruang::leftJoin('barang_keluars', function ($join) use ($ruang) {
-                $join->on('ruangs.id', '=', 'barang_keluars.id_ruang')
-                    ->where('barang_keluars.status', '=', 'validate');
-            })
-                ->select('ruangs.id', 'ruangs.ruangan', DB::raw('SUM(barang_keluars.jumlah_keluar) as total_jumlah_keluar'))
-                ->where('ruangs.id', $ruang->id)
-                ->groupBy('ruangs.id', 'ruangs.ruangan')
-                ->first();
+public function indexBarang()
+{
+    $ruangs = Ruang::orderBy("kode_ruangan", "asc")->get();
+    $barangData = [];
 
-            $barangData[] = [
-                'ruangan' => $ruangWithKeluar->ruangan,
-                'jumlah_keluar' => $ruangWithKeluar->total_jumlah_keluar ?? 0,
-            ];
-        }
+    foreach ($ruangs as $ruang) {
+        // Menggunakan leftJoin untuk mendapatkan data ruang yang memiliki barang keluar
+        $ruangWithKeluar = Ruang::leftJoin('barang_keluars', function ($join) use ($ruang) {
+            $join->on('ruangs.id', '=', 'barang_keluars.id_ruang')
+                ->where('barang_keluars.status', '=', 'validate');
+        })
+            ->select('ruangs.id', 'ruangs.ruangan', DB::raw('SUM(barang_keluars.jumlah_keluar) as total_jumlah_keluar'))
+            ->where('ruangs.id', $ruang->id)
+            ->groupBy('ruangs.id', 'ruangs.ruangan')
+            ->first();
 
-        return view('barang_ruang.barangRuang', ['barangData' => $barangData]);
+        $barangData[] = [
+            'id_ruangan' => $ruangWithKeluar->id,
+            'ruangan' => $ruangWithKeluar->ruangan,
+            'jumlah_keluar' => $ruangWithKeluar->total_jumlah_keluar ?? 0,
+        ];
     }
+    // dd($barangData);
+
+    return view('barang_ruang.barangRuang', ['barangData' => $barangData]);
+}
+
 
     public function tampilQr($id)
     {
