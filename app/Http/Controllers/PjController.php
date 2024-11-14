@@ -32,8 +32,8 @@ class PjController extends Controller
             'nip' => 'required|unique:pj',
             'alamat' => 'required|string',
             'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
-            'email' => 'required|email|unique:pj',
-            'password' => 'required|string|min:8',
+            'email' => 'nullable|email|unique:pj',
+            'password' => 'nullable|string|min:8',
         ]);
 
         if ($validator->fails()) {
@@ -68,7 +68,7 @@ class PjController extends Controller
             'nip' => 'required|unique:pj,nip,' . $id,
             'alamat' => 'required|string',
             'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
-            'email' => 'required|email|unique:pj,email,' . $id,
+            'email' => 'nullable|email|unique:pj,email,' . $id,
             'password' => 'nullable|string|min:8', // Update password if provided
         ]);
 

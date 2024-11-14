@@ -21,11 +21,6 @@
                                 <input type="text" class="form-control" id="basicInput" name="nip"
                                     value="{{ old('nip') }}">
                             </div>
-                            <div class="form-group">
-                                <label for="basicInput">Alamat</label>
-                                <input type="text" class="form-control" id="basicInput" name="alamat"
-                                    value="{{ old('alamat') }}">
-                            </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
@@ -36,6 +31,11 @@
                                 </select>
                             </div>
                             <div class="form-group">
+                                <label for="basicInput">Alamat</label>
+                                <input type="text" class="form-control" id="basicInput" name="alamat"
+                                    value="{{ old('alamat') }}">
+                            </div>
+                            <!-- <div class="form-group">
                                 <label for="basicInput">Email</label>
                                 <input type="email" class="form-control" id="basicInput" name="email"
                                     value="{{ old('email') }}">
@@ -49,7 +49,7 @@
                                         <i class="bi bi-eye" id="togglePassword"></i>
                                     </span>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
             </div>

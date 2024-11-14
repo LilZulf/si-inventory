@@ -40,7 +40,7 @@
                         <th>NIP</th>
                         <th>Alamat</th>
                         <th>Jenis Kelamin</th>
-                        <th>Email</th>
+                        {{-- <th>Email</th> --}}
                         {{-- <th>Password</th> --}}
                         <th>Aksi</th>
                     </tr>
@@ -53,7 +53,7 @@
                             <td>{{ $item->nip }}</td>
                             <td>{{ $item->alamat }}</td>
                             <td>{{ $item->jenis_kelamin }}</td>
-                            <td>{{ $item->email }}</td>
+                            <!-- <td>{{ $item->email }}</td> -->
                             <td><a href="pj/edit/{{ $item->id }}"
                                     class="btn btn-warning
                                 btn-sm">
